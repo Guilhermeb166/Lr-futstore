@@ -1,0 +1,76 @@
+/* Estilo básico da barra de navegação */
+.navbar {
+    background-color: #000000;
+    padding: 0;
+    margin: auto;
+}
+
+.navList {
+    display: flex;
+    align-items: start;
+    list-style: none;
+    display: flex; /* Deixa os itens em linha */
+    gap: 35px;
+    margin: 0;
+    padding: 0;
+
+    & li{
+        cursor: pointer;
+    }
+}
+.linksNav{
+    position: relative;
+    transition: all .2s ease;
+    display: flex;
+    align-items: start;
+    &:hover{
+        transform: scale(1.1);
+        color: var(--laranja);
+    }
+    
+}
+.navItem {
+    position: relative; /* Necessário para o posicionamento absoluto do dropdown */
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: start;
+    gap: 5px;
+
+    transition: color 0.3s ease;
+}
+
+.navItem:hover {
+    color: var(--laranja); /* Cor ao passar o mouse */
+}
+
+/* Oculta o dropdown por padrão */
+.dropdown {
+    display: none;
+    position: absolute; /* Deixa o dropdown sobre os outros elementos */
+    background-color: #333;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+    border-radius: 8px;
+    top: 30px; /* Ajusta a posição do dropdown */
+    left: 0;
+    z-index: 10; /* Garante que fique acima de outros elementos */
+}
+
+/* Exibe o dropdown ao passar o mouse */
+.navItem:hover .dropdown {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo dos itens do dropdown */
+.dropdown li {
+    padding: 8px 20px;
+    color: white;
+    transition: background 0.3s;
+}
+
+.dropdown li:hover {
+    background-color: #555;
+}
