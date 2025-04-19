@@ -1,5 +1,4 @@
 .adminPage{
-    background: linear-gradient(210deg,#000000,var(--laranja),#000);
     display: flex;
     align-items: start;
     justify-content: center;
@@ -10,22 +9,23 @@
     backdrop-filter: blur(5px);
     display: flex;
     flex-wrap: wrap;
-    padding:20px 10px;
+    padding:30px 20px;
     flex-direction: column;
     width: 90%;
-    max-width: 600px;
-    gap: 22px;
+    max-width: 1000px;
+    gap: 30px;
     text-align: start;
-    margin-top: 10px;
+    margin-top: 20px;
     color: #000;
     
     border-radius: 10px;
-    border: 1px solid #ffffff4b;
-    box-shadow:inset 0px 0px 10px #000000;
+    border: 1px solid #ffffff23;
+    box-shadow:inset 0px 0px 10px #0000005f;
 
     & div{
         display: flex;
         flex-direction: column;
+        gap: 5px;
 
         &>label{
             font-family: var(--Ruda);
@@ -34,8 +34,10 @@
         &>input{
             outline: none;
             border-radius: 3px;
-            border: 1px solid #000;
-            padding: 3px;
+            border: 1px solid #6d6d6d;
+            box-shadow: 0px 0px 3px #00000072;
+            font-size: 1rem;
+            padding:6px 3px;
         }
     }
 }
@@ -43,20 +45,22 @@
     cursor: pointer;
 }
 .addShirt{
-    background-color: #c7c7c7;
-    border: 1px solid #000;
-    border-radius: 3px;
-    color: #000000;
+    background-color: var(--laranja);
+    border: 1px solid #00000067;
+    border-radius: 5px;
+    color: #ffffff;
     padding: 5px 0;
     cursor: pointer;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.2rem;
     width: 90%;
-    max-width: 300px;
+    max-width: 350px;
+    box-shadow: 0px 0px 3px #00000072;
     margin: auto;
     transition:background .3s ease;
 
+
     &:hover{
-        background-color: #999999;
+        background-color: var(--laranjaEscuro);
     }
 }

@@ -21,8 +21,13 @@ export default function Admin() {
         e.preventDefault();
         setLoading(true);
         setMensagem("");
+
+        const precoNumerico = preco
+        .replace("R$ ", "")      // remove R$
+        .replace(".", "")        // remove ponto dos milhares (se houver)
+        .replace(",", ".");      // troca vírgula por ponto
     
-        const camisa = { tipo, nome, tamanhos, preco, clube, paisOrigem, selecao, anoLancamento,imagem };
+        const camisa = { tipo, nome, tamanhos, preco: precoNumerico, clube, paisOrigem, selecao, anoLancamento,imagem };
         
         try {
           if (!imagem.startsWith("http")) throw new Error("Insira uma URL válida da imagem.");
@@ -44,6 +49,40 @@ export default function Admin() {
           setLoading(false);
         }
       };
+
+      const formatarParaReal = (valor) =>{
+        //remove tudo que não é número ou vírgula
+        let numerico = valor.replace(/[^\d,]/g, "")
+
+        /*Esse comando limpa tudo o que não é número ou vírgula.
+
+        \d significa "dígitos" (ou seja, números).
+
+        ^ e [] significam "qualquer coisa que não seja isso".
+        
+        Então isso remove letras, símbolos, espaços, "R$", etc.
+
+        */
+
+        //troca múltiplas vírgular por uma
+        numerico = numerico.replace(/,+/g, ',')
+
+        //se tiver vírgula, limita a 2 decimais
+        if (numerico.includes(",")){
+          const [inteiro,decimal] = numerico.split(",")
+          numerico = inteiro + "," + decimal.slice(0,2)
+        }
+
+        //Remove zeros à esquerda
+        numerico = numerico.replace(/^0+(?=\d)/,'')
+
+        return `R$ ${numerico}`
+      }
+
+      const handlePrecoChange = (e) =>{
+        const valorFormatado = formatarParaReal(e.target.value)
+        setPreco(valorFormatado)
+      }
 
   return (
     <main className={styles.adminPage}>
@@ -95,7 +134,7 @@ export default function Admin() {
           </div>
           <div>
             <label>Nome da Camisa:</label>
-            <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} required />
+            <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} required placeholder="EX: Manchester City Uniforme I 25/26"/>
           </div>
           <div>
             <label>Tamanhos Disponíveis:</label>
@@ -103,7 +142,7 @@ export default function Admin() {
           </div>
           <div>
             <label>Preço:</label>
-            <input type="number" value={preco} onChange={(e) => setPreco(e.target.value)} required />
+            <input type="text" value={preco} onChange={handlePrecoChange} placeholder="R$ 0,00" required />
           </div>
           {tipo === "clube" || (tipo === "retro" && !selecao) ? (
               <>
@@ -120,7 +159,7 @@ export default function Admin() {
           {tipo === "selecao" || (tipo === "retro" && !clube) ? (
               <div>
                 <label>Seleção:</label>
-                <input type="text" value={selecao} onChange={(e) => setSelecao(e.target.value)} required />
+                <input type="text" value={selecao} onChange={(e) => setSelecao(e.target.value)} required placeholder="Ex: Brasil"/>
               </div>
           ) : null}
           {tipo === "retro" ? (
