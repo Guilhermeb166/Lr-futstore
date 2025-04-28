@@ -53,7 +53,7 @@
     margin: 0;
     padding: 10px 0;
     border-radius: 8px;
-    top: 30px; /* Ajusta a posição do dropdown */
+    top: 18px; /* Ajusta a posição do dropdown */
     left: 0;
     z-index: 10; /* Garante que fique acima de outros elementos */
 }

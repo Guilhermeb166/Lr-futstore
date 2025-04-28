@@ -1,0 +1,145 @@
+/*Carrinho Lateral*/
+.sideCart {
+    position: fixed;
+    top: 0;
+    right: -100%; /* começa fora da tela */
+    width: 350px;
+    height: 100vh;
+    background-color: #161616;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    padding: 10px;
+}
+
+.open {
+    right: 0; /* quando aberto */
+}
+
+.closeIcon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+.emptyText{
+    margin: 20px 0;
+}
+.cartItem{
+    display: flex;
+    justify-content: space-around;
+    color: #fff;
+    margin: 20px 0;
+    
+    .itemImage{
+        width: 80px;
+    }
+
+    .removeIcon{
+        color: var(--vermelho);
+        cursor: pointer;
+        font-size: 25px;
+        margin: auto 0;
+    }
+}
+
+
+.DivisionButton {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .ButtonCart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        height: 30px;
+        width: 100px;
+        background-color: white;
+        border-radius: 6px;
+        color: #000000;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        transition: 1s ease;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #000000a2;
+            color: var(--laranja);
+            font-size: 13px;
+        }
+        &:hover .IconButtonCart{
+            animation: cartIconRotate  1s linear;
+        }
+    }
+    
+    .IconButtonCart {
+        
+        &.IconButtonCart:hover {
+            animation: cartIconRotate .7s ease;
+        }
+    }
+}
+@keyframes cartIconRotate {
+    0% {
+        transform: rotate(0deg); /* Início da rotação */
+      }
+      100% {
+        transform: rotate(360deg); /* Rotação completa */
+      }
+}
+
+/*Página de Carrinho*/
+.cartPage{
+    display: flex   ;
+    align-items: center;
+    justify-content: center;
+}
+.cartTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    text-align: center;
+}
+.cartTable th,
+.cartTable td {
+    padding:16px 10px;
+    border-bottom: 1px solid #ddd;
+}
+.productImage{
+    width: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.quantityControl{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    .quantityIcon{
+        cursor: pointer;
+        font-size: 22px;   
+    }
+}
+
+.removeProductIcon{
+    font-size: 22px;
+    color: var(--vermelho);
+    cursor: pointer;
+    transition: all .3s ease;
+    &:hover{
+        transform: scale(1.1);
+    }
+}
+.orderDescription{
+    text-align: center;
+    margin-top: 2rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    width: 40%;
+}
+
+

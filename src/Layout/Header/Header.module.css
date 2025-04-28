@@ -72,6 +72,17 @@ header{
         color: var(--laranja);
     }
 }
+.quantityProductsCart {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: red;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+}
 .menuButton {
     display: none;
     color: #fff;
