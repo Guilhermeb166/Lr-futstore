@@ -25,7 +25,7 @@ export default function Nav(){
                         <li>Seleções</li>
                     </ul>
                 </li>
-                <li className={styles.linksNav}>Fale Conosco</li>
+                <li className={styles.linksNav} onClick={()=>{navigate('/contact')}}>Fale Conosco</li>
             </ul>
         </nav>
     )

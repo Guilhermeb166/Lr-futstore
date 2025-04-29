@@ -5,6 +5,7 @@ import Home from "./Pages/Home/Home";
 import Admin from "./Pages/Admin/Admin";
 import Login from "./Pages/Login/Login";
 import Cart from "./Pages/Cart/Cart";
+import TalkToUs from "./Pages/TalkToUs/TalkToUs";
 function App() {
   //const hideHeaderRoutes = ["/login"]; // Rotas onde o Header não deve aparecer
 
@@ -19,7 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/cart" element={<Cart/>}/>
-          
+          <Route path="/contact" element={<TalkToUs/>}/>
         </Routes>
       </Router>  
     </>

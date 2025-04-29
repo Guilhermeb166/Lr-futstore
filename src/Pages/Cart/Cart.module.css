@@ -2,18 +2,20 @@
 .sideCart {
     position: fixed;
     top: 0;
-    right: -100%; /* começa fora da tela */
+    right: -100%;
+    /* começa fora da tela */
     width: 350px;
     height: 100vh;
     background-color: #161616;
-    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     transition: right 0.3s ease;
     padding: 10px;
 }
 
 .open {
-    right: 0; /* quando aberto */
+    right: 0;
+    /* quando aberto */
 }
 
 .closeIcon {
@@ -23,20 +25,22 @@
     top: 1rem;
     right: 1rem;
 }
-.emptyText{
+
+.emptyText {
     margin: 20px 0;
 }
-.cartItem{
+
+.cartItem {
     display: flex;
     justify-content: space-around;
     color: #fff;
     margin: 20px 0;
-    
-    .itemImage{
+
+    .itemImage {
         width: 80px;
     }
 
-    .removeIcon{
+    .removeIcon {
         color: var(--vermelho);
         cursor: pointer;
         font-size: 25px;
@@ -50,7 +54,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     .ButtonCart {
         display: flex;
         align-items: center;
@@ -61,7 +65,7 @@
         background-color: white;
         border-radius: 6px;
         color: #000000;
-        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        border: 1px solid rgba(255, 255, 255, 0.18);
         transition: 1s ease;
         cursor: pointer;
 
@@ -70,76 +74,207 @@
             color: var(--laranja);
             font-size: 13px;
         }
-        &:hover .IconButtonCart{
-            animation: cartIconRotate  1s linear;
+
+        &:hover .IconButtonCart {
+            animation: cartIconRotate 1s linear;
         }
     }
-    
+
     .IconButtonCart {
-        
+
         &.IconButtonCart:hover {
             animation: cartIconRotate .7s ease;
         }
     }
 }
+
 @keyframes cartIconRotate {
     0% {
-        transform: rotate(0deg); /* Início da rotação */
-      }
-      100% {
-        transform: rotate(360deg); /* Rotação completa */
-      }
+        transform: rotate(0deg);
+        /* Início da rotação */
+    }
+
+    100% {
+        transform: rotate(360deg);
+        /* Rotação completa */
+    }
 }
 
 /*Página de Carrinho*/
-.cartPage{
-    display: flex   ;
-    align-items: center;
+.cartPage {
+    display: flex;
+    align-items: start;
     justify-content: center;
 }
+
 .cartTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
     text-align: center;
 }
+
 .cartTable th,
 .cartTable td {
-    padding:16px 10px;
+    padding: 16px 10px;
     border-bottom: 1px solid #ddd;
 }
-.productImage{
+
+.productImage {
     width: 80px;
     object-fit: cover;
     border-radius: 5px;
 }
-.quantityControl{
+
+.quantityControl {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    .quantityIcon{
+
+    .quantityIcon {
         cursor: pointer;
-        font-size: 22px;   
+        font-size: 22px;
     }
 }
 
-.removeProductIcon{
+.removeProductIcon {
     font-size: 22px;
     color: var(--vermelho);
     cursor: pointer;
     transition: all .3s ease;
-    &:hover{
+
+    &:hover {
         transform: scale(1.1);
     }
 }
-.orderDescription{
+
+.orderDescription {
     text-align: center;
-    margin-top: 2rem;
+    padding: 22px 5px;
     font-weight: bold;
-    font-size: 1.2rem;
-    border: 1px solid black;
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    height: 400px;
     width: 40%;
+    max-width: 400px;
+    position: relative;
+
+    &::before {
+        content: '';
+        height: 400px;
+        width: 1px;
+        border-radius: 10px;
+        background-color: #4e4e4e53;
+        left: 45px;
+        top: 50px;
+        position: absolute;
+    }
 }
 
 
+.TitleDescriptionResun {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.opcaoEntregaSelect {
+    max-width: 270px;
+    width: 90%;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px 2px;
+    border: 1px solid rgba(211, 211, 211);
+    outline: none;
+    &>option {
+        cursor: pointer;
+    }
+}
+
+aside {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.FormDescrition {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.FormLabel {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.BarSeachrForm {
+    width: 90%;
+    max-width: 270px;
+    height: 27px;
+    border-radius: 5px;
+    border: 1px solid rgba(211, 211, 211);
+    outline: none;
+    font-size: 13px;
+    padding-left: 5px;
+}
+
+.TitleDescription {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.subtotalControl {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    max-width: 180px;
+
+    &>p{
+        color: #50505083;
+        width: 100%;
+        font-size: 16px;
+    }
+}
+
+.sendRequest {
+    display: flex;
+    align-items: center;
+    
+    /* espaço entre texto e ícone */
+    justify-content: center;
+    height: 30px;
+    position: relative;
+    letter-spacing: 1.5px;
+    background-color: #000;
+    border-radius: 5px;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: 1s ease;
+    cursor: pointer;
+    overflow: hidden;
+    color: var(--laranja);
+    font-weight: 700;
+    &:hover {}
+}
+.truckIcon {
+    transition: transform 0.8s ease;
+    position: absolute;
+    right: 15px;
+    color: var(--laranja);
+}
+  
+
+.sendRequest:hover .truckIcon {
+    transform: translateX(45px)
+}
