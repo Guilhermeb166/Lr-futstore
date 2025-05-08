@@ -10,7 +10,7 @@
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     transition: right 0.3s ease;
-    padding: 10px;
+    padding: 10px 5px;
 }
 
 .open {
@@ -35,11 +35,13 @@
     justify-content: space-around;
     color: #fff;
     margin: 20px 0;
-
+    
     .itemImage {
         width: 80px;
     }
-
+    &>div{
+        margin-left: 10px;
+    }
     .removeIcon {
         color: var(--vermelho);
         cursor: pointer;
@@ -76,16 +78,11 @@
         }
 
         &:hover .IconButtonCart {
-            animation: cartIconRotate 1s linear;
+            animation: cartIconRotate .5s ease;
         }
     }
 
-    .IconButtonCart {
 
-        &.IconButtonCart:hover {
-            animation: cartIconRotate .7s ease;
-        }
-    }
 }
 
 @keyframes cartIconRotate {
@@ -189,6 +186,7 @@
     padding: 5px 2px;
     border: 1px solid rgba(211, 211, 211);
     outline: none;
+
     &>option {
         cursor: pointer;
     }
@@ -240,7 +238,7 @@ aside {
     width: 90%;
     max-width: 180px;
 
-    &>p{
+    &>p {
         color: #50505083;
         width: 100%;
         font-size: 16px;
@@ -250,7 +248,7 @@ aside {
 .sendRequest {
     display: flex;
     align-items: center;
-    
+
     /* espaço entre texto e ícone */
     justify-content: center;
     height: 30px;
@@ -265,16 +263,17 @@ aside {
     overflow: hidden;
     color: var(--laranja);
     font-weight: 700;
-    &:hover {}
+
 }
+
 .truckIcon {
-    transition: transform 0.8s ease;
+    transition: transform 0.2s ease;
     position: absolute;
     right: 15px;
     color: var(--laranja);
 }
-  
 
-.sendRequest:hover .truckIcon {
+
+.sendRequest:active .truckIcon {
     transform: translateX(45px)
 }

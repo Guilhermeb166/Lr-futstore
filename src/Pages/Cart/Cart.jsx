@@ -10,8 +10,35 @@ export default function Cart() {
     const [opcaoEntrega, setOpcaoEntrega] = useState('retirada')
     const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart()
     let [ cep,setCep] = useState('')
+    const [nome,setNome] = useState('')
+    const [endereco,setEndereco] = useState('')
+    const [contato, setContato] = useState('');
+    const [email, setEmail] = useState('    ');
 
     const subtotal = cartItems.reduce((acc, item) => acc + item.preco * item.quantity, 0);
+
+    const enviarPedido=()=>{
+        const numberWhatsapp='558597407364'
+        let mensagem = '*Novo pedido via website*%0A%0A'
+
+        cartItems.forEach(item=>{
+            mensagem += `• ${item.nome} (x${item.quantity}) - R$ ${(item.preco * item.quantity).toFixed(2)}%0A`
+        })
+
+        mensagem += `%0A*Subtotal:* R$ ${subtotal.toFixed(2)}%0A`
+    
+
+        if(opcaoEntrega==='entrega'){
+            mensagem+= `%0A*Entrega solicitada*%0A`
+            mensagem += `Nome: ${nome}%0A Contato: ${contato}%0A E-mail: ${email}%0A CEP: ${cep}%0A Endereço: ${endereco}%0A`;
+        }else {
+            mensagem += `%0A*Forma de entrega:* Retirada na loja`;
+        }
+
+        const url = `https://wa.me/${numberWhatsapp}?text=${mensagem}`;
+        window.open(url, "_blank");
+    }
+
     return (
         <main className={styles.cartPage}>
             {cartItems.length === 0 ? (
@@ -71,6 +98,8 @@ export default function Cart() {
                                         className={styles.BarSeachrForm}
                                         type="text"
                                         placeholder="Informe seu Nome completo"
+                                        value={nome}
+                                        onChange={(e)=>setNome(e.target.value)}
                                     />
                                 </div>
                                 <div className={styles.FormDescrition}>
@@ -79,7 +108,8 @@ export default function Cart() {
                                         type="text"
                                         inputMode=""
                                         placeholder="Informe seu Contato"
-
+                                        value={contato}
+                                        onChange={(e)=>setContato(e.target.value)}
                                     />
                                 </div>
                                 <div className={styles.FormDescrition}>
@@ -87,6 +117,8 @@ export default function Cart() {
                                         className={styles.BarSeachrForm}
                                         type="email"
                                         placeholder="Informe seu E-mail"
+                                        value={email}
+                                        onChange={(e)=>setEmail(e.target.value)}
                                     />
                                 </div>
                                 <div className={styles.FormDescrition}>
@@ -97,8 +129,18 @@ export default function Cart() {
                                         placeholder="Informe seu CEP:"
                                         onChange={(e)=>{
                                             const numero = e.target.value.replace(/[^0-9-]/g, '')
-                                            setCep=(numero)
+                                            setCep(numero)
                                         }}
+                                    />
+                                </div>
+                                <div className={styles.FormDescrition}>
+                                    <input
+                                        className={styles.BarSeachrForm}
+                                        type="text"
+                                        value={endereco}
+                                        placeholder="Informe seu Endereço:"
+                                        onChange={(e)=>setEndereco(e.target.value)}
+
                                     />
                                 </div>
                             </aside>
@@ -110,7 +152,7 @@ export default function Cart() {
 
                         <div className={styles.subtotalControl}>
                             <h2 className={styles.TitleDescription}>Subtotal: R$ {subtotal.toFixed(2)}</h2>
-                            <button className={styles.sendRequest}>Enviar Pedido <FaTruck className={styles.truckIcon} /></button>
+                            <button className={styles.sendRequest} onClick={enviarPedido}>Enviar Pedido <FaTruck className={styles.truckIcon} /></button>
                             <p>O pedido é enviado para o whatsapp</p>
                         </div>
 
