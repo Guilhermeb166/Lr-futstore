@@ -131,7 +131,7 @@ export default function Login(){
                     <form className={styles.formAccount} action="" onSubmit={handleLogin}>
                         <h2 className={styles.title}>Entre na sua Conta</h2>
                         <div className={styles.inputWrapper}>
-                            <input type="email" placeholder='Digite seu email...' onChange={(e)=> setEmail((e.target.value))} className={styles.input}/>
+                            <input type="email" placeholder='Digite seu email...' onChange={(e)=> setEmail((e.target.value))} className={styles.input} autoComplete='on'/>
                             <div className={`${styles.passwordControl} ${styles.input}`}>
                                 <input type={showPassword?'text':'password'} placeholder='Digite sua senha...' onChange={(e)=> setPassword((e.target.value))} autoComplete='current-password'/>
                                 {showPassword?<FaEye onClick={handlePassword} className={styles.iconPassword}/>:<FaEyeSlash onClick={handlePassword} className={styles.iconPassword}/>}

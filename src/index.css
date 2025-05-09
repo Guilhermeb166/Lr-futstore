@@ -16,3 +16,6 @@
 ::-webkit-scrollbar {
   display: none;
 }
+body{
+  background-color: rgb(242, 242, 242);
+}
