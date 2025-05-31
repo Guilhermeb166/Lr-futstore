@@ -1,0 +1,55 @@
+.ProdutcPage {
+    margin-top: 50px;
+    height: 100vh;
+    padding-inline: 15px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.filterControl{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    border-radius: 5px;
+    height: 490px;
+    padding: 6px;
+    max-width: 300px;
+    border: 1px solid #0000002f;
+    box-shadow: -1px 1px 3px #00000070;
+}
+.priceFilter{
+    width: 97%;
+    margin: 0 auto;
+}
+.horizontalLine{
+    height: .5px;
+    width: 100%;
+    background-color: rgba(105, 105, 105, 0.412);
+    border-radius: 10px;
+    margin: 10px auto;
+}
+.filterButton{
+    background-color: var(--laranja);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-top: auto;
+    cursor: pointer;
+    height: 30px;
+    transition: background 0.3s ease;
+    &:hover{
+        background-color: var(--laranjaEscuro);
+
+    }
+}
+
+.anoInput {
+    width: 100%;
+    
+    padding: 4px 6px;
+    border: .5px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    outline: none;
+}

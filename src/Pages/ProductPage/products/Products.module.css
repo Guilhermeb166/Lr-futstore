@@ -1,0 +1,62 @@
+.ProductsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+    max-width: 1000px;
+    gap: 20px 60px;
+}
+
+.productCard {
+    border: 1px solid #00000090;
+    box-shadow: 1px 1px 3px #00000070;
+    border-radius: 5px;
+    height: 300px;
+    width: 200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.5s ease;
+
+    &:hover {
+        transform: scale(1.03);
+    }
+
+    & .addCartIcon {
+        color: #000000;
+        position: absolute;
+        font-size: 30px;
+
+        top: 3px;
+        right: 5px;
+        cursor: pointer;
+        transition: all .3s ease;
+
+        &:hover {
+            color: #Fff;
+        }
+    }
+
+    &>img {
+        border-radius: 5px 5px 0 0;
+        width: 100%;
+    }
+
+    &>div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 0 15px 10px;
+
+        &>h3 {
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        &>p {
+            font-size: 1.05rem;
+        }
+    }
+}

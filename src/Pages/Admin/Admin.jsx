@@ -162,7 +162,7 @@ export default function Admin() {
                 <input type="text" value={selecao} onChange={(e) => setSelecao(e.target.value)} required placeholder="Ex: Brasil"/>
               </div>
           ) : null}
-          {tipo === "retro" ? (
+          {tipo === "retro" || tipo === "selecao" || tipo === "clube" ? (
               <div>
                 <label>Ano de Lançamento:</label>
                 <input type="number" value={anoLancamento} onChange={(e) => setAnoLancamento(e.target.value)} required />

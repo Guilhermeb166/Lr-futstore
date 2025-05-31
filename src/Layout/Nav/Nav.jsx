@@ -1,3 +1,4 @@
+//nav.jsx
 import styles from './Nav.module.css'
 import { FaChevronDown } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
@@ -11,9 +12,9 @@ export default function Nav(){
                 <li className={styles.navItem}>
                     Camisas Tailandesas <FaChevronDown/>
                     <ul className={styles.dropdown}>
-                        <li>Clubes Temporada 24/25</li>
-                        <li> Clubes Temporada 23/24</li>
-                        <li>Seleções </li>
+                        <li onClick={()=>{navigate('/products?ano=2024')}}>Clubes Temporada 24/25</li>
+                        <li onClick={()=>navigate('/products?ano=2023')}> Clubes Temporada 23/24</li>
+                        <li onClick={()=>navigate('/products/?tipo=selecao')}>Seleções </li>
                     </ul>
                 </li>
 
