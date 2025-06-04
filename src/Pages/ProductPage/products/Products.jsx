@@ -5,11 +5,13 @@ import { collection, getDocs, } from 'firebase/firestore';
 import { FaCartPlus } from "react-icons/fa";
 import { useCart } from '../../../Context/AppContext';
 import { db } from '../../../backend/firebase'; // ajuste o caminho conforme seu projeto
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento }) {
     const [products, setProducts] = useState([])
     const { addToCart } = useCart()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -18,10 +20,6 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
             //primeiro pegamos todos os produtos
             const snapshot = await getDocs(q)
             let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-
-            console.log("Produtos brutos:", data);
-
-            
 
             //filtros
             data = data.filter(prod =>
@@ -57,7 +55,7 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                 <p>Nenhum produto encontrado.</p>
             ) : (
                 products.map(prod => (
-                    <div key={prod.id} className={styles.productCard}>
+                    <div key={prod.id} className={styles.productCard} onClick={() => navigate(`/individualProduct/${prod.id}`)}>
                         <FaCartPlus className={styles.addCartIcon} onClick={() => addToCart(prod)} />
                         <img src={prod.image} alt={prod.nome} />
                         <div>
