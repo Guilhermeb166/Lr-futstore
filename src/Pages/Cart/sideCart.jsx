@@ -28,9 +28,9 @@ export default function SideCard({ isOpen, onClose }) {
                     <ul className={styles.cartList}>
                         {cartItems.map((item) => (
                             <li key={item.id} className={styles.cartItem}>
-                                <img src={item.image} alt={item.nome} className={styles.itemImage} />
+                                <img src={item.image} alt={item.nome} className={styles.itemImage} onClick={() => navigation(`/individualProduct/${item.id}`)}/>
                                 <div>
-                                    <p>{item.nome}</p>
+                                    <p  onClick={() => navigation(`/individualProduct/${item.id}`)} className={styles.itemName}>{item.nome}</p>
                                     <p>R$ {Number(item.preco).toFixed(2)}</p>
                                     <p>Quantidade: {item.quantity}</p>
                                 </div>

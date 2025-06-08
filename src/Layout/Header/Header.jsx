@@ -33,7 +33,7 @@ export default function Header(){
         <header>
             
             <div>
-                <img src="./img/Picsart_25-03-21_14-56-48-912.png" alt="" className={styles.logo}/>
+                <img src="./img/lrLogo.png" alt="" className={styles.logo}/>
                 {/*Ícone do menu hamburguer */}
                 <div className={styles.searchControl}>
                     <input type="text" name="" id="" />

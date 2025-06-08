@@ -6,9 +6,8 @@ import { MenuItem, Select, FormControl, InputLabel, Checkbox, FormGroup, FormCon
 import Products from './products/Products';
 export default function ProdutcPage() {
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const anoQuery = queryParams.get('ano');
-    const tipoQuery = queryParams.get('tipo');
+    
+
 
     // Estados visuais
     const [maxPrice, setMaxPrice] = useState(1000)
@@ -25,15 +24,36 @@ export default function ProdutcPage() {
     const [appliedAnoLancamento, setAppliedAnoLancamento] = useState('');
 
     useEffect(() => {
-        if (anoQuery && !isNaN(anoQuery)) {
-            setAnoLancamento(anoQuery);
-            setAppliedAnoLancamento(anoQuery)
-        }
-        if (tipoQuery === 'selecao') {
-            setSelectedTypes(['selecao']);
-            setAppliedSelectedTypes(['selecao']);
-        }
-    }, [anoQuery, tipoQuery])
+    const queryParams = new URLSearchParams(location.search);
+    const ano = location.state?.anoLancamento || queryParams.get('ano');
+    const tipo = location.state?.tipo || queryParams.get('tipo');
+
+    if (ano && !isNaN(ano)) {
+        setAnoLancamento(ano);
+        setAppliedAnoLancamento(ano);
+    } else {
+        setAnoLancamento('');
+        setAppliedAnoLancamento('');
+    }
+
+    if (tipo === 'selecao') {
+        setSelectedTypes(['selecao']);
+        setAppliedSelectedTypes(['selecao']);
+    } else {
+        setSelectedTypes([]);
+        setAppliedSelectedTypes([]);
+    }
+
+    setValue('');
+    setMinPrice(0);
+    setMaxPrice(1000);
+    setAppliedMinPrice(0);
+    setAppliedMaxPrice(1000);
+    setAppliedValue('');
+}, [location.state, location.search]);
+
+
+
 
 
     const handleTypeChange = (type) => {
@@ -229,12 +249,7 @@ export default function ProdutcPage() {
                         max={2030}
                         maxLength={4}
                         value={anoLancamento}
-                        onChange={(e) => {
-                            const val = e.target.value;
-                            if (val === '' || (/^\d{0,4}$/.test(val) && val <= 2030 && val >= 1900)) {
-                                setAnoLancamento(val);
-                            }
-                        }}
+                        onChange={(e) => setAnoLancamento(e.target.value)}
                         placeholder="Ex: 2024"
                         className={styles.anoInput}
                     />

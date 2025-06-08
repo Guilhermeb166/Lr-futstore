@@ -18,6 +18,7 @@
     user-select: none;
     box-shadow: 1px 1px 5px #0000005b;
     display: flex;
+    cursor: pointer;
     flex-direction: column;
     padding-bottom: 10px;
     align-items: center;
@@ -57,5 +58,11 @@
         .cardPrice {
             font-size: 1.3rem;
         }
+    }
+}
+
+@media screen and (max-width:767px) {
+    .cardsLancamentos {
+        justify-content: center;
     }
 }

@@ -12,6 +12,7 @@ import IndividualProduct from "./Pages/ProductPage/individualProduct/IndividualP
 function App() {
   //const hideHeaderRoutes = ["/login"]; // Rotas onde o Header não deve aparecer
 
+
   return (
     <>
       {/*!hideHeaderRoutes.includes(location.pathname) && */}
@@ -24,7 +25,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/contact" element={<TalkToUs/>}/>
-          <Route path="/products" element={<ProdutcPage/>}/>
+          <Route path="/products" element={<ProdutcPage />}/>
           <Route path="/individualProduct/:id" element={<IndividualProduct/>}/>
         </Routes>
 

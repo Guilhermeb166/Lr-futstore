@@ -35,13 +35,21 @@
     justify-content: space-around;
     color: #fff;
     margin: 20px 0;
-    
+
     .itemImage {
+        cursor: pointer;
         width: 80px;
     }
-    &>div{
+
+    &>div {
         margin-left: 10px;
+
+        .itemName:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
     }
+
     .removeIcon {
         color: var(--vermelho);
         cursor: pointer;
@@ -100,6 +108,7 @@
 /*Página de Carrinho*/
 .cartPage {
     display: flex;
+    padding-bottom: 140px;
     align-items: start;
     justify-content: center;
 }

@@ -1,0 +1,140 @@
+.individualProduct {
+    display: flex;
+
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0% auto;
+    margin-top: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.productDetailsLeft {
+    width: 45%;
+}
+
+.divisoria {
+    width: .5px;
+    background-color: #b4b4b4;
+    border-radius: 10px;
+}
+
+.DivisionConfiImageP {
+    height: 700px;
+    max-width: 470px;
+    overflow: hidden;
+    position: relative;
+
+    .ImageProducts {
+        width: 100%;
+        height: 550px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.308);
+        object-fit: cover;
+        transition: transform 0.3s ease;
+        transform-origin: center center;
+
+        &.ImageProducts:hover {
+            transform: scale(1.2);
+        }
+    }
+
+
+}
+
+/* ____________________ */
+.productDetailsRight {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-top: 30px;
+    flex-direction: column;
+    height: 500px;
+
+    &>.titleWrapper {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 40px;
+
+        &>span {
+            font-size: 0.8rem;
+            color: #626262;
+        }
+    }
+}
+
+.TitleProductMain {
+
+    font-size: 35px;
+}
+
+.DescritionProducts {
+    padding: 20px;
+    text-align: center;
+}
+
+.BtnList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 350px;
+    padding: 20px;
+
+}
+
+.btnSize {
+    height: 35px;
+    width: 40px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s ease;
+
+    &:hover {
+        color: orange;
+    }
+}
+
+.selected {
+    background-color: var(--laranja);
+    color: #000;
+    transition: all .3s ease;
+
+    &:hover {
+        color: #000;
+    }
+}
+
+.DescritionProductsPreco {
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--verde);
+    padding: 20px;
+}
+
+.FinshButton {
+    width: 300px;
+    height: 35px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    transition: 1s;
+
+    &.FinshButton:hover {
+        color: orange;
+        font-size: 14px;
+    }
+}

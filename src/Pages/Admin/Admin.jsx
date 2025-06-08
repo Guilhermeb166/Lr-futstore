@@ -16,6 +16,7 @@ export default function Admin() {
     const [imagem, setImagem] = useState("");
     const [loading, setLoading] = useState(false);
     const [mensagem, setMensagem] = useState("");
+    const [descricao,setDescricao] =useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,7 +28,7 @@ export default function Admin() {
         .replace(".", "")        // remove ponto dos milhares (se houver)
         .replace(",", ".");      // troca vírgula por ponto
     
-        const camisa = { tipo, nome, tamanhos, preco: precoNumerico, clube, paisOrigem, selecao, anoLancamento,imagem };
+        const camisa = { tipo, nome, tamanhos, preco: precoNumerico, clube, paisOrigem, selecao, anoLancamento,imagem,descricao };
         
         try {
           if (!imagem.startsWith("http")) throw new Error("Insira uma URL válida da imagem.");
@@ -42,6 +43,7 @@ export default function Admin() {
           setSelecao("");
           setAnoLancamento("");
           setImagem("")
+          setDescricao("")
         } catch (error) {
           console.error("Erro ao adicionar camisa:", error.message || error);
           setMensagem(`Erro: ${error.message || "Erro ao adicionar camisa."}`);
@@ -104,7 +106,7 @@ export default function Admin() {
               "&.Mui-focused": {
                 color: "black", // quando focado
               },
-            }}>Tipo de Camisa</InputLabel>
+            }}>Selecione o Tipo de Camisa</InputLabel>
             <Select
               labelId="tipo-label"
               value={tipo}
@@ -141,6 +143,11 @@ export default function Admin() {
             <input type="text" placeholder="Ex: P, M, G" value={tamanhos.join(", ")} onChange={(e) => setTamanhos(e.target.value.split(", "))} required />
           </div>
           <div>
+            <label>Descrição</label>
+            <textarea value={descricao} onChange={(e)=> setDescricao(e.target.value)} placeholder="Descrição da camisa"
+            maxLength={120}/>
+          </div>
+          <div>
             <label>Preço:</label>
             <input type="text" value={preco} onChange={handlePrecoChange} placeholder="R$ 0,00" required />
           </div>
@@ -165,7 +172,7 @@ export default function Admin() {
           {tipo === "retro" || tipo === "selecao" || tipo === "clube" ? (
               <div>
                 <label>Ano de Lançamento:</label>
-                <input type="number" value={anoLancamento} onChange={(e) => setAnoLancamento(e.target.value)} required />
+                <input type="number" value={anoLancamento} onChange={(e) => setAnoLancamento(e.target.value)} required placeholder="Ex: 2025"/>
               </div>
           ) : null}
           <button className={styles.addShirt} type="submit" disabled={loading}>

@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { db } from '../../../backend/firebase'
 export default function IndividualProduct() {
     const { id } = useParams();
+    const [selectedSize, setSelectedSize] = useState("");
     const [product, setProduct] = useState(null);
 
 
@@ -24,13 +25,52 @@ export default function IndividualProduct() {
     return (
         <main className={styles.individualProduct}>
             <section className={styles.productDetailsLeft}>
-                <img src={product.image} alt={product.nome} />
+                <div className={styles.DivisionConfiImageP}>
+                    <img src={product.image} alt={product.nome} className={styles.ImageProducts} />
+                </div>
             </section>
+            <p className={styles.divisoria}></p>
             <section className={styles.productDetailsRight}>
+                <div className={styles.titleWrapper}>
+                    <h2 className={styles.TitleProductMain}>{product.nome}</h2>
+                    <span>Ano de lançamento:  {product.anoLancamento}</span>
+                </div>
+                <p className={styles.DescritionProducts}>{product.descricao}</p>
+                <div className={styles.BtnList}>
+                    {product.tamanhos.map((tamanho, index) => (
+                        <label
+                            key={index}
+                            className={`${styles.btnSize} ${selectedSize === tamanho ? styles.selected : ''}`}
+                            onClick={(e) => {
+                                e.preventDefault(); // evita comportamento nativo do label
+                                setSelectedSize((prev) => (prev === tamanho ? '' : tamanho));
+                            }}
+                        >
+                            <input
+                                type="radio"
+                                name="tamanho"
+                                value={tamanho}
+                                checked={selectedSize === tamanho}
+                                readOnly
+                                style={{ display: 'none' }}
+                            />
+                            {tamanho}
+                        </label>
+                    ))}
+                </div>
 
+
+
+
+                <p className={styles.DescritionProductsPreco}>{Number(product.preco).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                })}
+                </p>
+                <button className={styles.FinshButton}>Adicionar o Carrinho</button>
             </section>
         </main>
 
-           
+
     )
 }
