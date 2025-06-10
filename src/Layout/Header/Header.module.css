@@ -144,8 +144,8 @@ header{
         z-index: 1000;
     }
     
-    .sideMenu.open {
-        right: 0; /* Mostra o menu quando a classe 'open' é adicionada */
+    .open {
+        right: 0 !important; /* Força visibilidade do menu lateral */
     }
     .closeMenu{
         color: #c52e2e;
