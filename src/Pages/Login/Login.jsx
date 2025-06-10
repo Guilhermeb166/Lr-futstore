@@ -105,6 +105,7 @@ export default function Login(){
                     </p>
                 </div>
             </section>
+            <p className={styles.divider}></p>
             <section className={`${styles.section} ${styles.formWrapper}`}>
                 {currentUser ? (
                     <div className={styles.dadosPessoais}>

@@ -16,7 +16,7 @@
 .card {
     width: 300px;
     user-select: none;
-    box-shadow: 1px 1px 5px #0000005b;
+    box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.493);
     display: flex;
     cursor: pointer;
     flex-direction: column;
@@ -29,6 +29,8 @@
         color: #000000;
         position: absolute;
         font-size: 30px;
+        z-index: 999;
+        background-color: transparent;
         top: 3px;
         right: 5px;
         cursor: pointer;

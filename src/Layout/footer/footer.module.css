@@ -20,17 +20,11 @@
     gap: 200px;
     /* espaço entre as ul e o span */
 
-
     &>span {
-        display: flex;
-        align-items: center;
-    }
-
-    &>span::after {
-        content: '';
         width: 1px;
+        border-radius: 10px;
         height: 120px;
-        background-color: #666;
+        background-color: #7c7c7c;
     }
 }
 
@@ -55,9 +49,21 @@
 }
 
 @media screen and (max-width:767px){
-    
+    .footer{
+        margin-top: 50px;
+    }
     .footerControl{
+        margin-top: 20px;
         gap: 0;
         justify-content: space-around;
+        align-items: center;
+
+        &>span{
+            height: 145px;
+        }
+    }
+    .copy{
+        width: 90%;
+        text-align: center;
     }
 }

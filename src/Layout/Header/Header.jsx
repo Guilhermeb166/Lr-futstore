@@ -7,7 +7,7 @@ import Nav from '../Nav/Nav';
 import { useNavigate } from 'react-router-dom';
 import SideCard from '../../Pages/Cart/sideCart';
 import { useCart } from '../../Context/AppContext';
-
+import logo from '../../img/lrLogo.png'
 export default function Header(){
     const [menuOpen,setMenuOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
@@ -33,7 +33,7 @@ export default function Header(){
         <header>
             
             <div>
-                <img src="./img/lrLogo.png" alt="" className={styles.logo}/>
+                <img src={logo} alt="" className={styles.logo}/>
                 {/*Ícone do menu hamburguer */}
                 <div className={styles.searchControl}>
                     <input type="text" name="" id="" />
@@ -81,13 +81,13 @@ export default function Header(){
                  {!isMobile && (
                     <ul className={styles.links}>
                         
-                        <div>
+                        
                             <li className={styles.iconsLink}><FaShoppingCart onClick={() => setCartOpen(true)} />{totalQuantity > 0 && (
                                 <span className={styles.quantityProductsCart}>{totalQuantity}</span>
                             )}
                             </li>
                             <li className={styles.iconsLink}><IoPerson onClick={() => navigate('/login')}/></li>
-                        </div>
+                        
                     </ul>
                 
                 )}

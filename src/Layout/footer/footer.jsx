@@ -21,7 +21,7 @@ export default function Footer(){
                     <li><MdOutlineMail/> lrfutstore@gmail.com  </li>
                 </ul>
             </div>
-            <p>&copy;  FUT STORE 2025 - Todos os direitos reservados. Conheça nossa política de privacidade</p>
+            <p className={styles.copy}>&copy;  FUT STORE 2025 - Todos os direitos reservados. Conheça nossa política de privacidade</p>
         </footer>
     )
 }

@@ -8,14 +8,14 @@ import Cart from "./Pages/Cart/Cart";
 import TalkToUs from "./Pages/TalkToUs/TalkToUs";
 import Footer from "./Layout/footer/footer";
 import ProdutcPage from "./Pages/ProductPage/ProdutcPage";
-import IndividualProduct from "./Pages/ProductPage/individualProduct/IndividualProduct";
+import IndividualProduct from "./Pages/ProductPage/individualProduct/individualProduct";
 function App() {
   //const hideHeaderRoutes = ["/login"]; // Rotas onde o Header não deve aparecer
 
 
   return (
     <>
-      {/*!hideHeaderRoutes.includes(location.pathname) && */}
+      {/*hideHeaderRoutes.includes(location.pathname) && */}
       <Router>
         <Header />
 

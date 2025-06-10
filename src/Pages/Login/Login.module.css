@@ -1,9 +1,11 @@
 .loginPage{
     display: flex;
     align-items: start;
+    margin-top: 130px;
     justify-content: center;
-    padding-inline: 20px;
-
+    padding-inline: 10px;
+    gap: 25px;
+    height: 480px;
     width: 100%; 
 }
 .section{
@@ -44,10 +46,20 @@
 }
 .text{
     line-height: 30px;
+    width: 90%;
+    max-width: 800px;
     letter-spacing: .2px;
     font-family: var(--Ruda);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     text-align: justify;
+}
+.divider{
+    content: '';
+    width: .5px;
+    border-radius: 10px;
+    height: 85%;
+    max-height: 500px;
+    background-color: #adadad77;
 }
 .formWrapper{
     margin-top: 50px;
@@ -122,5 +134,26 @@
 
     &:hover{
         color: var(--laranja);
+    }
+}
+
+
+@media screen and (max-width:767px){
+    .loginPage{
+        flex-direction: column-reverse;
+        align-items: center;
+        height: auto;
+    }
+    .textWrapper,.formWrapper{
+        width: 95%;
+        max-width: 750px;
+    }
+    .formAccount{
+        
+        max-width: 450px;
+    }
+    .formBtn{
+        max-width: 280px;
+        height: 34px;
     }
 }

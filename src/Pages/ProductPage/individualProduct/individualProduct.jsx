@@ -25,17 +25,17 @@ export default function IndividualProduct() {
     return (
         <main className={styles.individualProduct}>
             <section className={styles.productDetailsLeft}>
-                <div className={styles.DivisionConfiImageP}>
-                    <img src={product.image} alt={product.nome} className={styles.ImageProducts} />
+                <div className={styles.ImageControl}>
+                    <img src={product.image} alt={product.nome} className={styles.ImageProduct} />
                 </div>
             </section>
             <p className={styles.divisoria}></p>
             <section className={styles.productDetailsRight}>
                 <div className={styles.titleWrapper}>
-                    <h2 className={styles.TitleProductMain}>{product.nome}</h2>
+                    <h2 className={styles.TitleProduct}>{product.nome}</h2>
                     <span>Ano de lançamento:  {product.anoLancamento}</span>
                 </div>
-                <p className={styles.DescritionProducts}>{product.descricao}</p>
+                <p className={styles.DescritionProduct}>{product.descricao}</p>
                 <div className={styles.BtnList}>
                     {product.tamanhos.map((tamanho, index) => (
                         <label
@@ -62,7 +62,7 @@ export default function IndividualProduct() {
 
 
 
-                <p className={styles.DescritionProductsPreco}>{Number(product.preco).toLocaleString('pt-BR', {
+                <p className={styles.priceProduct}>{Number(product.preco).toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL'
                 })}
