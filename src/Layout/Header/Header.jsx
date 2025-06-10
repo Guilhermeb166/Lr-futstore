@@ -10,7 +10,7 @@ import { useCart } from '../../Context/AppContext';
 import logo from '../../img/lrLogo.png'
 export default function Header(){
     const [menuOpen,setMenuOpen] = useState(false)
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+    const [isMobile, setIsMobile] = useState(false);
     const [cartOpen,setCartOpen] = useState(false)
     const navigate = useNavigate();
     
@@ -25,6 +25,7 @@ export default function Header(){
                 
             }
         }
+        handleResize()
         window.addEventListener('resize',handleResize)
         return () => window.removeEventListener('resize',handleResize)
     },[])
