@@ -19,11 +19,10 @@ export default function Header(){
 
     useEffect(()=>{
         const handleResize = () =>{
-            setIsMobile(window.innerWidth <= 767);
-            if(window.innerWidth>767){
-                setMenuOpen(false)
-                
-            }
+            const mobile = window.innerWidth <= 767;
+            setIsMobile(mobile);
+            console.log("isMobile:", mobile);
+            if(!mobile) setMenuOpen(false);
         }
         handleResize()
         window.addEventListener('resize',handleResize)
