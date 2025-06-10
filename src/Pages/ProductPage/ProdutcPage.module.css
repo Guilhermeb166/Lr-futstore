@@ -53,3 +53,22 @@
     border-radius: 5px;
     outline: none;
 }
+
+@media screen and (max-width:767px){
+    .ProdutcPage{
+        gap: 0 20px;
+    }
+    .filterControl{
+        width: 40%;
+        max-width: 400px;
+        height: 560px;
+    }
+}
+
+@media screen and (max-width:442px){
+    .filterControl{
+        width: 70%;
+        max-width: 400px;
+        height: 570px;
+    }
+}

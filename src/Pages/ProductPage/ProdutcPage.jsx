@@ -39,6 +39,12 @@ export default function ProdutcPage() {
     if (tipo === 'selecao') {
         setSelectedTypes(['selecao']);
         setAppliedSelectedTypes(['selecao']);
+    }else if (tipo === 'clube'){
+        setSelectedTypes(['clube']);
+        setAppliedSelectedTypes(['clube']);
+    }else if (tipo=== 'retro'){
+        setSelectedTypes(['retro']);
+        setAppliedSelectedTypes(['retro']);
     } else {
         setSelectedTypes([]);
         setAppliedSelectedTypes([]);

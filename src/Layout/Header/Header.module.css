@@ -100,7 +100,7 @@ header{
 
 
 /* Mostra o botão do menu apenas em telas menores que 600px */
-@media (max-width: 600px) {
+@media (max-width: 767px) {
     header{
         height: 120px;
         &>div{
@@ -110,7 +110,7 @@ header{
             gap: 10%;
         }
         .logo{
-            width: 60px;
+            width: 40%;
         }
     }
     .menuButton {

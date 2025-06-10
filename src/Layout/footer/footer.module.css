@@ -53,3 +53,11 @@
 .linksFooter{
     cursor: pointer;
 }
+
+@media screen and (max-width:767px){
+    
+    .footerControl{
+        gap: 0;
+        justify-content: space-around;
+    }
+}

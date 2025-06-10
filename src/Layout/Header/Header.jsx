@@ -10,7 +10,7 @@ import { useCart } from '../../Context/AppContext';
 
 export default function Header(){
     const [menuOpen,setMenuOpen] = useState(false)
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
     const [cartOpen,setCartOpen] = useState(false)
     const navigate = useNavigate();
     
@@ -19,8 +19,8 @@ export default function Header(){
 
     useEffect(()=>{
         const handleResize = () =>{
-            setIsMobile(window.innerWidth <= 600);
-            if(window.innerWidth>600){
+            setIsMobile(window.innerWidth <= 767);
+            if(window.innerWidth>767){
                 setMenuOpen(false)
                 
             }
@@ -50,12 +50,30 @@ export default function Header(){
                 <nav className={`${styles.sideMenu} ${menuOpen ? styles.open : ''}`}>
                     <IoClose className={styles.closeMenu} onClick={()=> setMenuOpen(!menuOpen)}/>
                     <ul className={styles.linksMobile}>
-                        <li onClick={() => navigate('/')}>Home</li>
-                        <li>Fale Conosco</li>
-                        <li>Tailandesas</li>
-                        <li>Retrôs</li>
-                        <li>Carrinho</li>
-                        <li>Minha Conta</li>
+                        <li onClick={() => {
+                           navigate('/')
+                           setMenuOpen(!menuOpen)
+                        }}>Home</li>
+                        <li onClick={() => {
+                            navigate('/contact') 
+                            setMenuOpen(!menuOpen)
+                        }}>Fale Conosco</li>
+                        <li onClick={()=> {
+                            navigate('/products', {state:{tipo: 'clube'}})
+                            setMenuOpen(!menuOpen)
+                        }}>Tailandesas</li>
+                        <li onClick={()=> {
+                            navigate('/products', {state:{tipo: 'retro'}})
+                            setMenuOpen(!menuOpen)
+                        }}>Retrôs</li>
+                        <li onClick={()=>{
+                            navigate('/cart')
+                            setMenuOpen(!menuOpen)
+                        }}>Carrinho</li>
+                        <li onClick={() =>{
+                            navigate('/login')
+                            setMenuOpen(!menuOpen)
+                        }}>Minha Conta</li>
                     </ul>
                 </nav>)}
 
