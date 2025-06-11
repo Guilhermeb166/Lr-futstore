@@ -2,15 +2,15 @@
 import styles from './Products.module.css'
 import { useState, useEffect } from 'react'
 import { collection, getDocs, } from 'firebase/firestore';
-import { FaCartPlus } from "react-icons/fa";
-import { useCart } from '../../../Context/AppContext';
+//import { FaCartPlus } from "react-icons/fa";
+//import { useCart } from '../../../Context/AppContext';
 import { db } from '../../../backend/firebase'; // ajuste o caminho conforme seu projeto
 import { useNavigate } from 'react-router-dom';
 
 
 export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento }) {
     const [products, setProducts] = useState([])
-    const { addToCart } = useCart()
+    //const { addToCart } = useCart()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -56,7 +56,7 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
             ) : (
                 products.map(prod => (
                     <div key={prod.id} className={styles.productCard} onClick={() => navigate(`/individualProduct/${prod.id}`)}>
-                        <FaCartPlus className={styles.addCartIcon} onClick={() => addToCart(prod)} />
+                        
                         <img src={prod.image} alt={prod.nome} />
                         <div>
                             <h3>{prod.nome}</h3>
