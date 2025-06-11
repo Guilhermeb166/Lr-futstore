@@ -56,19 +56,23 @@
 
 @media screen and (max-width:767px){
     .ProdutcPage{
-        gap: 0 20px;
+        height: auto;
+        gap: 60px 0;
+        flex-direction: column;
+        align-items: center;
     }
     .filterControl{
-        width: 40%;
-        max-width: 400px;
-        height: 560px;
+        width: 80%;
+        max-width: 680px;
+        height: auto;
+        padding: 15px 5px;
+        gap: 20px 0;
+    }
+    .filterButton{
+        width: 90%;
+        max-width: 280px;
+        height: 30px;
+        margin: 0 auto;
     }
 }
 
-@media screen and (max-width:442px){
-    .filterControl{
-        width: 70%;
-        max-width: 400px;
-        height: 570px;
-    }
-}

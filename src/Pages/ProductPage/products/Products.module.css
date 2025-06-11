@@ -64,14 +64,13 @@
 @media screen and (max-width:767px) {
     .ProductsContainer {
         width: 100%;
-        max-width: 1500px;
-        justify-content: space-around;
-        gap: 20px;
+        justify-content: center;
+        gap:55px 45px;
     }
 
     .productCard {
-        width: 150px;
-        height: 270px;
+        width: 200px;
+        height: 300px;
     }
 }
 
@@ -79,29 +78,5 @@
     .productCard{
         width: 200px;
         height: 300px;
-    }
-}
-@media screen and (max-width:645px){
-    .productCard{
-        width: 170px;
-        height: 300px;
-    }
-}
-@media screen and (max-width:558px){
-    .productCard{
-        width: 150px;
-        height: 260px;
-    }
-}
-@media screen and (max-width:505px){
-    .productCard{
-        width: 120px;
-        height: 230px;
-    }
-}
-@media screen and (max-width:442px){
-    .productCard{
-        width: 150px;
-        height: 250px;
     }
 }
