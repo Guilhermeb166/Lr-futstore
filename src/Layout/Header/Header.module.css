@@ -84,6 +84,9 @@ header{
     border-radius: 50%;
     font-weight: bold;
 }
+.menuButtonContainer {
+  position: relative;
+}
 .menuButton {
     display: none;
     color: #fff;
@@ -94,6 +97,17 @@ header{
     right: 10px;
     font-size: 22px;
     cursor: pointer;
+}
+.quantityProductsCartMobile{
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: red;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
 }
 .sideMenu{
     display: none;
@@ -171,6 +185,21 @@ header{
         &:hover{
             background-color: #333;
         }
+    }
+    .itemCart{
+        display: flex;
+        align-items: center;
+    }
+    .quantityProductsCartMobileInline{
+        
+        background-color: red;
+        color: white;
+        font-size: 0.7rem;
+        padding: 4px 7px;
+        text-align: center;
+        margin-left: 8px;
+        border-radius: 10px;
+        font-weight: bold;
     }
     
    

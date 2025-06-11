@@ -42,9 +42,16 @@ export default function Header(){
                 </div>
 
                 {/*para mobile --------- */}
-                {isMobile && ( <button className={styles.menuButton} onClick={()=> setMenuOpen(!menuOpen)}>
-                    {menuOpen ? '': <FaBars/>}
-                </button> )}
+                {isMobile && (
+                    <div className={styles.menuButtonContainer}>
+                        <button className={styles.menuButton} onClick={() => setMenuOpen(!menuOpen)}>
+                        {!menuOpen && <FaBars />}
+                        </button>
+                        {totalQuantity > 0 && (
+                        <span className={styles.quantityProductsCartMobile}>{totalQuantity}</span>
+                        )}
+                    </div>
+                )}
                 {/*Menu lateral */}
                 {isMobile &&(
                 <nav className={`${styles.sideMenu} ${menuOpen ? styles.open : ''}`}>
@@ -69,7 +76,9 @@ export default function Header(){
                         <li onClick={()=>{
                             navigate('/cart')
                             setMenuOpen(!menuOpen)
-                        }}>Carrinho</li>
+                        }} className={styles.itemCart}>Carrinho{totalQuantity > 0 && (
+                        <span className={styles.quantityProductsCartMobileInline}>{totalQuantity}</span>
+                        )}</li>
                         <li onClick={() =>{
                             navigate('/login')
                             setMenuOpen(!menuOpen)
@@ -82,7 +91,8 @@ export default function Header(){
                     <ul className={styles.links}>
                         
                         
-                            <li className={styles.iconsLink}><FaShoppingCart onClick={() => setCartOpen(true)} />{totalQuantity > 0 && (
+                            <li className={styles.iconsLink}><FaShoppingCart onClick={() => setCartOpen(true)} />
+                            {totalQuantity > 0 && (
                                 <span className={styles.quantityProductsCart}>{totalQuantity}</span>
                             )}
                             </li>

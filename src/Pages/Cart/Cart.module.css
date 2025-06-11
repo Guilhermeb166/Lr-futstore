@@ -170,16 +170,7 @@
     max-width: 400px;
     position: relative;
 
-    &::before {
-        content: '';
-        height: 400px;
-        width: 1px;
-        border-radius: 10px;
-        background-color: #4e4e4e53;
-        left: 45px;
-        top: 50px;
-        position: absolute;
-    }
+   
 }
 
 
@@ -258,8 +249,6 @@ aside {
 .sendRequest {
     display: flex;
     align-items: center;
-
-    /* espaço entre texto e ícone */
     justify-content: center;
     height: 30px;
     position: relative;
@@ -286,4 +275,37 @@ aside {
 
 .sendRequest:active .truckIcon {
     transform: translateX(45px)
+}
+
+
+@media screen and (max-width:767px) {
+    .cartPage{
+        flex-direction: column;
+        height: auto;
+        padding-bottom: 170px;
+    }
+    .orderDescription{
+        width: 95%;
+        max-width: 700px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+        
+    }
+    .opcaoEntregaSelect,.BarSeachrForm{
+        max-width: 500px;
+        height: 35px;
+    }
+    .subtotalControl{
+        max-width: 250px;
+    }
+    .sendRequest{
+        height: 35px;
+    }
+}
+@media screen and (max-width:405px){
+    .productImage {
+        width: 50px;
+    }
 }
