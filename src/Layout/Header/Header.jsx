@@ -33,7 +33,7 @@ export default function Header(){
         <header>
             
             <div>
-                <img src={logo} alt="" className={styles.logo}/>
+                <img src={logo} alt="" className={styles.logo} onClick={() => navigate('/')}/>
                 {/*Ícone do menu hamburguer */}
                 <div className={styles.searchControl}>
                     <input type="text" name="" id="" />
