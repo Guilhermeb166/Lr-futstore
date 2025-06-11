@@ -23,8 +23,9 @@
   display: none;
 }
 
-body {
+ body{
   background-color: #fdfdfd;
+  height: auto;
 }
 
 @media screen and (max-width:767px){

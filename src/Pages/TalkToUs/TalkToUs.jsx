@@ -1,5 +1,6 @@
 import styles from './TalkToUs.module.css'
 import { useState } from 'react'
+import { BsInstagram } from "react-icons/bs";
 export default function TalkToUs() {
     const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
@@ -14,12 +15,15 @@ export default function TalkToUs() {
 
     return (
         <main className={styles.contactPage}>
-            <h2>Entre em Contato</h2>
+      
             <section className={styles.contactContainer}>
-                <div>
+                <div className={styles.socialMedia}>
                     <h2>Redes Sociais</h2>
+                    <div>
+                        <BsInstagram className={styles.socialIcon}/>
+                    </div>
                 </div>
-
+                <p className={styles.divider}></p>
                 <form onSubmit={handleSubmit} className={styles.emailForm}>
                     <div className={styles.email}>
                         <label htmlFor="email">Digite seu Email:</label>

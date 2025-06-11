@@ -117,11 +117,11 @@ header{
 /* Mostra o botão do menu apenas em telas menores que 600px */
 @media (max-width: 767px) {
     header{
-        height: 120px;
+        height: 80px;
         &>div{
             gap: 0;
             padding-inline: 5px;
-            justify-content: center;
+            justify-content: space-around;
             gap: 10%;
         }
         .logo{
