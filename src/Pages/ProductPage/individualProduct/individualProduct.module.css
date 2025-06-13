@@ -117,6 +117,20 @@
         color: #000;
     }
 }
+.quantityWrapper {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantityInput {
+  width: 60px;
+  border: 1px solid #626262;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 16px;
+}
 
 .priceProduct {
     font-weight: 600;

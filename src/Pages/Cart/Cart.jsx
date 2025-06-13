@@ -18,11 +18,22 @@ export default function Cart() {
     const subtotal = cartItems.reduce((acc, item) => acc + item.preco * item.quantity, 0);
 
     const enviarPedido=()=>{
+
+        if (opcaoEntrega === 'entrega') {
+            if (!nome || !contato || !email || !cep || !endereco) {
+                alert('Por favor, preencha todos os campos para a entrega.');
+                return;
+            } else if (!nome.trim() || !contato.trim() || !email.trim() || !cep.trim() || !endereco.trim()){
+                alert('Preencha todos os campos corretamente.');
+                return;
+            }
+        }
+
         const numberWhatsapp='558597407364'
         let mensagem = '*Novo pedido via website*%0A%0A'
 
         cartItems.forEach(item=>{
-            mensagem += `• ${item.nome} (x${item.quantity}) - R$ ${(item.preco * item.quantity).toFixed(2)}%0A`
+            mensagem += `• ${item.nome} (Tam: ${item.tamanho} - x${item.quantity}) - R$ ${(item.preco * item.quantity).toFixed(2)}%0A`
         })
 
         mensagem += `%0A*Subtotal:* R$ ${subtotal.toFixed(2)}%0A`
@@ -60,23 +71,23 @@ export default function Cart() {
                                 <tr key={item.id} className={styles.produtCell}>
                                     <td><img src={item.image} alt={item.nome} className={styles.productImage} />
                                     </td>
-                                    <td>{item.nome}</td>
+                                    <td>{item.nome} <br /> <small>Tam: {item.tamanho}</small></td>
                                     <td>
                                         <div className={styles.quantityControl}>
                                             <FaCaretLeft
-                                                onClick={() => decreaseQuantity(item.id)}
+                                                onClick={() => decreaseQuantity(item.id, item.tamanho)}
                                                 className={styles.quantityIcon}
                                             />
 
                                             <span>{item.quantity}</span>
                                             <FaCaretRight
-                                                onClick={() => increaseQuantity(item.id)}
+                                                onClick={() => increaseQuantity(item.id, item.tamanho)}
                                                 className={styles.quantityIcon}
                                             />
                                         </div>
                                     </td>
                                     <td>R$ {(item.preco * item.quantity).toFixed(2)}</td>
-                                    <td><IoTrashOutline onClick={() => removeFromCart(item.id)} className={styles.removeProductIcon} /></td>
+                                    <td><IoTrashOutline onClick={() => removeFromCart(item.id, item.tamanho)} className={styles.removeProductIcon} /></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -92,7 +103,7 @@ export default function Cart() {
                             <option value="entrega">Entrega</option>
                         </select>
                         {opcaoEntrega === 'entrega' ? (
-                            <aside>
+                            <form className={styles.form}>
                                 <div className={styles.FormDescrition}>
                                     <input
                                         className={styles.BarSeachrForm}
@@ -143,7 +154,7 @@ export default function Cart() {
 
                                     />
                                 </div>
-                            </aside>
+                            </form>
                         ) : (
                             <aside>
                                 <p>Retirada</p>

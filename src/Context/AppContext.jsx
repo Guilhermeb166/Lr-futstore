@@ -37,7 +37,7 @@ export function AppProvider({ children }) {//Estamos criando um componente prove
 
     const addToCart = (item) => {//!Essa função adiciona um item ao carrinho. Ela primeiro verifica se o item já está no carrinho (existingItem).
       setCartItems((prevItems) => {
-        const existingItem = prevItems.find((i) => i.id === item.id);
+        const existingItem = prevItems.find((i) => i.id === item.id && i.tamanho === item.tamanho);
         /*
           ? prevItems: é o valor atual do carrinho (antes de adicionar o novo item). É uma lista de objetos, onde cada objeto representa um produto no carrinho.
 
@@ -52,7 +52,7 @@ export function AppProvider({ children }) {//Estamos criando um componente prove
             //! prevItems é o carrinho atual (antes de adicionar o novo item).
             //! .map() percorre todos os itens do carrinho e retorna uma nova lista modificada.
 
-            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+            i.id === item.id &&i.tamaho ===item.tamanho ? { ...i, quantity: i.quantity + item.quantity } : i
             /*
               ^ Para cada item i no carrinho:
 
@@ -65,7 +65,7 @@ export function AppProvider({ children }) {//Estamos criando um componente prove
           );
         }
     
-        return [...prevItems, { ...item, quantity: 1 }];
+        return [...prevItems, { ...item}];
         /*prevItems - É o carrinho atual,
 
         //! ...prevItems
@@ -85,35 +85,37 @@ export function AppProvider({ children }) {//Estamos criando um componente prove
     };
     
 
-    const removeFromCart = (id) => {
-      setCartItems((prevItems) => {
-        return prevItems
+    const removeFromCart = (id,tamanho) => {
+      setCartItems((prevItems) =>
+        prevItems
           .map((item) =>
-            item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+            item.id === id && item.tamanho === tamanho
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
           )
-          .filter((item) => item.quantity > 0);
-      });
+          .filter((item) => item.quantity > 0)
+      );
     };
 
-    const increaseQuantity = (productId) => {
-      setCartItems(prevItems =>
-          prevItems.map(item =>
-              item.id === productId
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item
-          )
+    const increaseQuantity = (id, tamanho) => {
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === id && item.tamanho === tamanho
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
       );
-  };
+    };
   
-  const decreaseQuantity = (productId) => {
-      setCartItems(prevItems =>
-          prevItems.map(item =>
-              item.id === productId
-                  ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
-                  : item
-          )
+    const decreaseQuantity = (id, tamanho) => {
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === id && item.tamanho === tamanho
+            ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
+            : item
+        )
       );
-  };
+    };
   
 
     return (
