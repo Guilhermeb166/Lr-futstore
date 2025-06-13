@@ -4,11 +4,15 @@ import { useState, useEffect } from 'react';
 import { FaShoppingCart, FaBars } from 'react-icons/fa';
 import { IoPerson,IoClose, IoSearchOutline } from "react-icons/io5";
 import Nav from '../Nav/Nav';
+import { db } from '../../backend/firebase';
+import { collection,getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import SideCard from '../../Pages/Cart/sideCart';
 import { useCart } from '../../Context/AppContext';
 import logo from '../../img/lrLogo.png'
 export default function Header(){
+    const [searchQuery,setSearchQuery] = useState('')
+    const [suggestions, setSuggestions] = useState([])
     const [menuOpen,setMenuOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false);
     const [cartOpen,setCartOpen] = useState(false)
@@ -16,6 +20,30 @@ export default function Header(){
     
     const { cartItems } = useCart();
     const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+    useEffect(()=>{
+        const fetchSuggestions = async () =>{
+            if(searchQuery.trim()===''){
+                setSuggestions([])
+                return
+            }
+
+            const queryLower = searchQuery.toLowerCase()
+            const snapshot = await getDocs(collection(db, 'camisas'))
+
+            const filtered = snapshot.docs
+                .map(doc=>({id:doc.id,...doc.data()}))
+                .filter(prod => prod.nome.toLowerCase().includes(queryLower))
+
+            setSuggestions(filtered.slice(0,5)) //limita a 5 sugestões
+        }
+
+        const delayDebounce = setTimeout(()=>{
+            fetchSuggestions()
+        },300) //espera 300ms antes de buscar
+
+        return()=> clearTimeout(delayDebounce)
+    },[searchQuery])
 
     useEffect(()=>{
         const handleResize = () =>{
@@ -36,9 +64,29 @@ export default function Header(){
                 <img src={logo} alt="" className={styles.logo} onClick={() => navigate('/')}/>
                 {/*Ícone do menu hamburguer */}
                 <div className={styles.searchControl}>
-                    <input type="text" name="" id="" />
+                    <input type="text" name="" id="" value={searchQuery}
+                    onChange={(e)=> setSearchQuery(e.target.value)}/>
                     <IoSearchOutline className={styles.searchIcon}/>
 
+                    {searchQuery && suggestions.length>0 && (
+                        <ul className={styles.suggestionsList}>
+                            {suggestions.map((item)=>(
+                                <li
+                                    key={item.id}
+                                    className={styles.suggestionItem}
+                                    onClick={()=>{
+                                        navigate(`/individualProduct/${item.id}`)
+                                        setSearchQuery('')
+                                        setSuggestions([])
+                                    }}
+                                >
+                                    <img src={item.image} alt="" className={styles.imgItem}/>
+                                    {item.nome}
+                                </li>
+                            ))}
+
+                        </ul>
+                    )}
                 </div>
 
                 {/*para mobile --------- */}
