@@ -1,11 +1,17 @@
-import { useState } from "react";
+//Admin.jsx
+import { useState, useEffect  } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Admin.module.css";
 import { adicionarCamisa } from "../../backend/camisaService";
+import { auth } from "../../backend/firebase";
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+
+const ADMIN_EMAIL = process.env.REACT_APP_ADMIN_EMAIL;
 
 export default function Admin() {
 
     const [tipo, setTipo] = useState("");
+    const [versao, setVersao] = useState("");
     const [nome, setNome] = useState("");
     const [tamanhos, setTamanhos] = useState([]);
     const [preco, setPreco] = useState("");
@@ -18,6 +24,17 @@ export default function Admin() {
     const [mensagem, setMensagem] = useState("");
     const [descricao,setDescricao] =useState("")
 
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+      const unsubscribe = auth.onAuthStateChanged((user)=>{
+        if(!user || user.email !== ADMIN_EMAIL){
+          navigate("/")
+        }
+      })
+      return () => unsubscribe()
+    }, [navigate])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -27,21 +44,28 @@ export default function Admin() {
         .replace("R$ ", "")      // remove R$
         .replace(".", "")        // remove ponto dos milhares (se houver)
         .replace(",", ".");      // troca vírgula por ponto
-    
-        const camisa = { tipo, nome, tamanhos, preco: precoNumerico, clube, paisOrigem, selecao, anoLancamento,imagem,descricao };
+
+        let imagemFinal = imagem.trim();
+
+        // Se não termina em .jpeg, adiciona
+        if (!imagemFinal.match(/\.(jpe?g)(\?.*)?$/i)) {
+          imagemFinal += ".jpeg";
+        }
+        const camisa = { tipo, nome, tamanhos, preco: precoNumerico, clube, paisOrigem, selecao, anoLancamento,imagem: imagemFinal,descricao };
         
         try {
           if (!imagem.startsWith("http")) throw new Error("Insira uma URL válida da imagem.");
           await adicionarCamisa(camisa);
           setMensagem("Camisa adicionada com sucesso!");
-          setTipo("");
-          setNome("");
-          setTamanhos([]);
-          setPreco("");
-          setClube("");
-          setPaisOrigem("");
-          setSelecao("");
-          setAnoLancamento("");
+          setTipo("")
+          setVersao("")
+          setNome("")
+          setTamanhos([])
+          setPreco("")
+          setClube("")
+          setPaisOrigem("")
+          setSelecao("")
+          setAnoLancamento("")
           setImagem("")
           setDescricao("")
         } catch (error) {
@@ -96,8 +120,7 @@ export default function Admin() {
             placeholder="https://..."
             value={imagem}
             onChange={(e) => setImagem(e.target.value)}
-            required
-                    />
+            required/>
           </div>
           <div>
           <FormControl fullWidth variant="standard" sx={{ mt: 0, mb: 0 }}>
@@ -106,7 +129,7 @@ export default function Admin() {
               "&.Mui-focused": {
                 color: "black", // quando focado
               },
-            }}>Selecione o Tipo de Camisa</InputLabel>
+            }} required>Selecione o Tipo de Camisa</InputLabel>
             <Select
               labelId="tipo-label"
               value={tipo}
@@ -130,6 +153,40 @@ export default function Admin() {
               <MenuItem value="clube">Clube</MenuItem>
               <MenuItem value="selecao">Seleção</MenuItem>
               <MenuItem value="retro">Retrô</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth variant="standard" sx={{ mt: 2, mb: 0 }}>
+            <InputLabel id="versao" sx={{
+              color: "black",
+              "&.Mui-focused": {
+                color: "black", // quando focado
+              },
+            }}>
+              Selecione a Versão da Camisa
+            </InputLabel>
+            <Select
+              labelId="versao"
+              value={versao}
+              onChange={(e) => setVersao(e.target.value)}
+              label="Versão da Camisa"
+              sx={{
+                color: "#000",
+                borderBottom: "1px solid #000",
+                '& .MuiSvgIcon-root': { color: "#000" }, // ícone da seta
+                '& .MuiSelect-select': {
+                  paddingRight: "0px !important", // FORÇA o padding-right
+                  paddingLeft: "0px", // opcional
+                },
+                '&::before': { borderBottom: "1px solid #000" },
+                '&:hover:not(.Mui-disabled):before': { borderBottom: "1px solid #000" },
+                '&:after': { borderBottom: "none" }, // ← remove linha no focus
+                '&.MuiSelect-select':{padding:"0px !important"},
+              }}
+            >
+              <MenuItem value=""><em>Selecione</em></MenuItem>
+              <MenuItem value="jogador">Versão Jogador</MenuItem>
+              <MenuItem value="torcedor">Versão Torcedor</MenuItem>
+              
             </Select>
           </FormControl>
 

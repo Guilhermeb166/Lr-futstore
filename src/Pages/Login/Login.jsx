@@ -1,11 +1,20 @@
+//login.jsx
 import styles from './Login.module.css'
-import { auth } from "../../backend/firebase";
+import { auth, db } from "../../backend/firebase";
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
   } from "firebase/auth";
+  import {
+    doc,
+    setDoc,
+    query,
+    where,
+    getDocs,
+    collection
+} from "firebase/firestore";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +25,8 @@ const PREDEFINED_USER = {
 export default function Login(){
     const [email,setEmail] = useState("")
     const [ password,setPassword] = useState("")
+    const [name,setName] = useState("")
+    const [username,setUsername] = useState("")
     const [createAccount,setCreateAccount] = useState(false)
     const [showPassword,setShowPassword] = useState(false)
     const [currentUser, setCurrentUser] = useState(null);
@@ -47,17 +58,21 @@ export default function Login(){
         return () => unsubscribe();
     }, []);   
 
+    const checkUsernameExists = async (username) => {
+        const q = query(collection(db, "usuarios"), where("username", "==", username))
+        const querySnapshot = await getDocs(q)
+        return !querySnapshot.empty
+    }
 
     const handleLogin = async (e)=>{
         e.preventDefault()
         try{
             const userCredential = await signInWithEmailAndPassword(auth,email,password)
-            const user = userCredential.user
 
             localStorage.setItem("loginTime", Date.now()); //  salva o horário do login
 
             //verifica se é o admin
-            if(user.email === PREDEFINED_USER.email){
+            if(userCredential.user.email === PREDEFINED_USER.email){
                 navigate("/admin"); // Redireciona para Admin
             }else{
                 navigate("/home"); // Redireciona para Home
@@ -67,10 +82,35 @@ export default function Login(){
         }
     }
 
-    const handleRegister = async ()=>{
+    const handleRegister = async (e)=>{
+        e.preventDefault();
+
         try{
-            await createUserWithEmailAndPassword(auth,email,password);
+            const exists = await checkUsernameExists(username);
+            if (exists) {
+                alert("Este nome de usuário já está em uso. Por favor, escolha outro.");
+                return;
+            }
+            // eslint-disable-next-line
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await new Promise((resolve) => {
+                const unsubscribe = onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                    unsubscribe();
+                    resolve();
+                    }
+                });
+            });
+            const uid = auth.currentUser.uid;
+
+            await setDoc(doc(db, "usuarios", uid), {
+                email,
+                name,
+                username,
+                createdAt: new Date()
+            });
             alert("Usuário criado com sucesso!")
+            setCreateAccount(false);
         }catch (error){
             alert("Erro ao criar usuário: " + error.message)
         }
@@ -118,10 +158,12 @@ export default function Login(){
                     <form className={styles.formAccount} action="" onSubmit={handleRegister} >
                         <h2 className={styles.title}>Crie sua Conta</h2>
                         <div className={styles.inputWrapper}>
-                            <input type="email" placeholder='Digite seu email...' onChange={(e)=> setEmail((e.target.value))} className={styles.input}/>
+                            <input type="text" placeholder='Nome Completo' onChange={(e)=> setName(e.target.value)} className={styles.input} required/>
+                            <input type="text" placeholder='Nome de Usuário' onChange={(e)=> setUsername(e.target.value)} className={styles.input} required/>
+                            <input type="email" placeholder='Digite seu email...' onChange={(e)=> setEmail(e.target.value)} className={styles.input} required/>
                             <div className={`${styles.passwordControl} ${styles.input}`}>
                                 <input type={showPassword?'text':'password'} placeholder='Digite sua senha...'  onChange={(e)=> setPassword((e.target.value))} autoComplete='current-password'/>
-                                {showPassword?<FaEye onClick={handlePassword}/>:<FaEyeSlash onClick={handlePassword}/>}
+                                {showPassword?<FaEye onClick={handlePassword} required/>:<FaEyeSlash onClick={handlePassword}/>}
                             </div>
                         </div>
                 

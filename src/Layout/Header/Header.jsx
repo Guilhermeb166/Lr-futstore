@@ -4,15 +4,17 @@ import { useState, useEffect } from 'react';
 import { FaShoppingCart, FaBars } from 'react-icons/fa';
 import { IoPerson,IoClose, IoSearchOutline } from "react-icons/io5";
 import Nav from '../Nav/Nav';
-import { db } from '../../backend/firebase';
-import { collection,getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import SideCard from '../../Pages/Cart/sideCart';
 import { useCart } from '../../Context/AppContext';
 import logo from '../../img/lrLogo.png'
+import { db,auth } from '../../backend/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { collection,getDocs, query, where } from 'firebase/firestore';
 export default function Header(){
     const [searchQuery,setSearchQuery] = useState('')
     const [suggestions, setSuggestions] = useState([])
+    const [username,setUsername] = useState(null)
     const [menuOpen,setMenuOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false);
     const [cartOpen,setCartOpen] = useState(false)
@@ -49,19 +51,37 @@ export default function Header(){
         const handleResize = () =>{
             const mobile = window.innerWidth <= 767;
             setIsMobile(mobile);
-            console.log("isMobile:", mobile);
             if(!mobile) setMenuOpen(false);
         }
         handleResize()
         window.addEventListener('resize',handleResize)
         return () => window.removeEventListener('resize',handleResize)
     },[])
+
+    useEffect(()=>{
+        const unsubscribe = onAuthStateChanged(auth, async (user)=>{
+            if (user) {
+                const snapshot = await getDocs (
+                    query(collection(db, 'usuarios'), where("email", "==", user.email))
+                )
+
+                if(!snapshot.empty){
+                    const userData = snapshot.docs[0].data()
+                    setUsername(userData.username || null)
+                }
+            } else {
+                setUsername(null)
+            }
+        })
+        return () => unsubscribe();
+    },[])
    
     return(
         <header>
             
             <div>
-                <img src={logo} alt="" className={styles.logo} onClick={() => navigate('/')}/>
+                <div className={styles.left}>
+                <img src={logo} alt="" className={styles.logo} onClick={() => navigate('/')}/></div>
                 {/*Ícone do menu hamburguer */}
                 <div className={styles.searchControl}>
                     <input type="text" name="" id="" value={searchQuery}
@@ -116,7 +136,7 @@ export default function Header(){
                         <li onClick={()=> {
                             navigate('/products', {state:{tipo: 'clube'}})
                             setMenuOpen(!menuOpen)
-                        }}>Tailandesas</li>
+                        }}>Versão Torcedor</li>
                         <li onClick={()=> {
                             navigate('/products', {state:{tipo: 'retro'}})
                             setMenuOpen(!menuOpen)
@@ -144,7 +164,11 @@ export default function Header(){
                                 <span className={styles.quantityProductsCart}>{totalQuantity}</span>
                             )}
                             </li>
-                            <li className={styles.iconsLink}><IoPerson onClick={() => navigate('/login')}/></li>
+                            <li className={styles.iconsLink}>
+                                <IoPerson onClick={() => navigate('/login')}/>
+                                
+                            </li>
+                            {username && <span className={styles.username}>{username}</span>}
                         
                     </ul>
                 
