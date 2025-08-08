@@ -9,6 +9,10 @@ export default function Nav() {
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate()
 
+    function handleFilterClub ({clube}) {
+        navigate(`/products?clube=${encodeURIComponent(clube)}`);
+    }
+
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, (user) =>{
             if(user && user.email === process.env.REACT_APP_ADMIN_EMAIL){
@@ -27,18 +31,21 @@ export default function Nav() {
                 <li className={styles.navItem}>
                     Camisas Tailandesas <FaChevronDown />
                     <ul className={styles.dropdown}>
-                        <li onClick={() =>  navigate('/products', { state: { anoLancamento: '2024' }})}>Clubes Temporada 24/25</li>
-                        <li onClick={() => navigate('/products', { state: { anoLancamento: '2023' }})}> Clubes Temporada 23/24</li>
-                        <li onClick={() => navigate('/products', { state: { tipo: 'selecao' } })}>Seleções </li>
+                        <li onClick={() => navigate('/products', { state: {tipo: 'clube', anoLancamento: '2025' }})}>Clubes Temporada 25/26</li>
+                        <li onClick={() =>  navigate('/products', { state: {tipo: 'clube', anoLancamento: '2024' }})}>Clubes Temporada 24/25</li>
+                        <li onClick={() => navigate('/products', { state: { tipo: 'retro' }})}> Retrôs </li>
+                        <li onClick={() =>  navigate('/products', { state: { tipo: 'selecao' }})}>Seleções</li>
+                        <li onClick={() => navigate('/products', { state: { versao: 'jogador' } })}>Versão Jogador </li>
+                        <li onClick={() => navigate('/products', { state: { versao: 'torcedor' } })}>Versão Torcedor </li>
                     </ul>
                 </li>
 
                 <li className={styles.navItem}>
-                    Retrôs <FaChevronDown />
+                    Ceará e Fortaleza <FaChevronDown />
                     <ul className={styles.dropdown}>
-                        <li>Europeus</li>
-                        <li>Brasileiros</li>
-                        <li>Seleções</li>
+                        <li onClick={() => handleFilterClub('Ceará')}>Ceará</li>
+                        <li onClick={() => handleFilterClub('Fortaleza')}>Fortaleza</li>
+                        
                     </ul>
                 </li>
                 <li className={styles.linksNav} onClick={() => { navigate('/contact') }}>Fale Conosco</li>

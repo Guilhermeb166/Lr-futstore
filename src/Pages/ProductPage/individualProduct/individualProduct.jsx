@@ -9,7 +9,7 @@ import { db } from '../../../backend/firebase'
 export default function IndividualProduct() {
     const {addToCart} = useCart()
     const { id } = useParams();
-    const [selectedSize, setSelectedSize] = useState("");
+    const [selectedSizes, setSelectedSizes] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [product, setProduct] = useState(null);
     const navigate = useNavigate()
@@ -39,64 +39,85 @@ export default function IndividualProduct() {
                     <h2 className={styles.TitleProduct}>{product.nome}</h2>
                     <span>Ano de lançamento:  {product.anoLancamento}</span>
                 </div>
-                <p className={styles.DescritionProduct}>{product.descricao}</p>
+                 <p className={styles.priceProduct}>{Number(product.preco).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                })}
+                </p>
+                
                 <div className={styles.BtnList}>
-                    {product.tamanhos.map((tamanho, index) => (
+                    {product.tamanhos.map((tamanho, index) => {
+                        const isSelected = selectedSizes.includes(tamanho)
+                        return (
+                        
                         <label
                             key={index}
-                            className={`${styles.btnSize} ${selectedSize === tamanho ? styles.selected : ''}`}
+                            className={`${styles.btnSize} ${isSelected ? styles.selected : ''}`}
                             onClick={(e) => {
                                 e.preventDefault();
-                                setSelectedSize((prev) => (prev === tamanho ? '' : tamanho));
+                                setSelectedSizes((prev) =>
+                                    isSelected
+                                    ? prev.filter((t) => t !== tamanho) // Remove se já estiver selecionado
+                                    : [...prev, tamanho] // Adiciona se não estiver
+                                )
                             }}
                         >
                             <input
-                                type="radio"
+                                type="checkbox"
                                 name="tamanho"
                                 value={tamanho}
-                                checked={selectedSize === tamanho}
+                                checked={isSelected}
                                 readOnly
                                 style={{ display: 'none' }}
                             />
                             {tamanho}
                         </label>
-                    ))}
+                        )
+                    })}
                 </div>
-                {selectedSize && (
+                {selectedSizes.length > 0 && (
                     <div className={styles.quantityWrapper}>
-                        <label htmlFor="quantity">Quantidade:</label>
-                        <input
-                        type="number"
-                        id="quantity"
-                        min="1"
-                        value={quantity}
-                        onChange={(e) => setQuantity(Number(e.target.value))}
-                        className={styles.quantityInput}
-                        />
+                        {selectedSizes.map((size, index)=>(
+                        <div key={index} className={styles.quantityInputGroup}>
+                            <label htmlFor={`quantity-${size}`}>Quantidade ({size}):</label>
+                            <input
+                            type="number"
+                            id={`quantity[size]`}
+                            min="1"
+                            value={quantity[size] || 1}
+                            onChange={(e) => 
+                                setQuantity((prev) => ({
+                                    ...prev,
+                                    [size] : Number(e.target.value)
+                                }))
+                            }
+                            className={styles.quantityInput}
+                            />
+                        </div>
+                        ))}
+                        
                     </div>
                 )}
 
 
 
 
-                <p className={styles.priceProduct}>{Number(product.preco).toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL'
-                })}
-                </p>
+               <p className={styles.DescritionProduct}>{product.descricao}</p>
                 <button className={styles.FinshButton}
                 onClick={()=> {
-                    if (!selectedSize) {
+                    if (selectedSizes.length === 0) {
                         alert("Selecione um tamanho antes de adicionar ao carrinho.");
                         return;
                     }
-                    addToCart({
-                        id: product.id,
-                        nome: product.nome,
-                        image: product.image,
-                        preco: product.preco,
-                        tamanho: selectedSize,
-                        quantity: quantity
+                    selectedSizes.forEach((size) => {
+                        addToCart({
+                            id: product.id,
+                            nome: product.nome,
+                            image: product.image,
+                            preco: product.preco,
+                            tamanho: size,
+                            quantity: quantity
+                        });
                     });
                     navigate('/cart')
                 }}>Adicionar o Carrinho</button>

@@ -1,6 +1,6 @@
 .ProdutcPage {
     margin-top: 150px;
-    height: 100vh;
+  
     padding-inline: 15px;
     display: flex;
     justify-content: space-around;
@@ -11,7 +11,7 @@
     flex-direction: column;
     width: 40%;
     border-radius: 5px;
-    height: 490px;
+    max-height: 640px;
     padding: 6px;
     max-width: 300px;
     border: 1px solid #0000002f;

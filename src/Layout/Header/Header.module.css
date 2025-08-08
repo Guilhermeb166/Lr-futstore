@@ -18,12 +18,15 @@ header{
         width: 100%;
     }
     .left, .links{
-          flex: 1;
-  display: flex;
-  align-items: center;
+        flex: 1;
+       
+    }
+    .left{
+        display: flex;
+        justify-content: center;
     }
     .logo{
-        
+        cursor: pointer;
         max-width: 70px;
         height: 60px;
         filter: invert(1);
@@ -36,7 +39,7 @@ header{
     align-items: center;
     position: relative;
     width: 100%;
-    max-width: 820px;
+    max-width: 620px;
     padding-inline: 5px;
     border-radius: 5px;
 

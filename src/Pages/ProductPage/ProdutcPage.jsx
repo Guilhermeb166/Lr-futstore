@@ -1,44 +1,60 @@
 //ProductPage.jsx
 import styles from './ProdutcPage.module.css'
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'; // serve para pegar a URL atual e os dados que foram passados pra essa página.
 import { MenuItem, Select, FormControl, InputLabel, Checkbox, FormGroup, FormControlLabel, Slider, Typography } from '@mui/material';
 import Products from './products/Products';
+
 export default function ProdutcPage() {
-    const location = useLocation();
-    
 
-
+    const location = useLocation();//Pega informações da URL (como filtros que vieram de outra página) e deixa guardado na variável location.
+    const navigate = useNavigate()
     // Estados visuais
     const [maxPrice, setMaxPrice] = useState(1000)
     const [minPrice, setMinPrice] = useState(0)
     const [value, setValue] = useState('');
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [anoLancamento, setAnoLancamento] = useState('');
+    const [selectedVersoes, setSelectedVersoes] = useState([]);
 
-    // Estados aplicados
+    // Estados aplicados(só mudam quando o botão “Filtrar” é clicado):
     const [appliedMaxPrice, setAppliedMaxPrice] = useState(1000);
     const [appliedMinPrice, setAppliedMinPrice] = useState(0);
     const [appliedValue, setAppliedValue] = useState('');
     const [appliedSelectedTypes, setAppliedSelectedTypes] = useState([]);
     const [appliedAnoLancamento, setAppliedAnoLancamento] = useState('');
+    const [appliedSelectedVersoes, setAppliedSelectedVersoes] = useState([]);
 
     useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const ano = location.state?.anoLancamento || queryParams.get('ano');
+    const queryParams = new URLSearchParams(location.search);//Cria um objeto para ler os parâmetros da URL.
+    const ano = location.state?.anoLancamento || queryParams.get('ano');//pega o anoLancamento que foi passado pela location.state,Se não tiver, pega da URL (queryParams.get('ano')).
     const tipo = location.state?.tipo || queryParams.get('tipo');
-
-    if (ano && !isNaN(ano)) {
+    const versao = location.state?.versao ||  queryParams.get('versao');
+    //O operador ?. evita erro caso state seja undefined.
+  
+    if (ano && !isNaN(ano)) {//verifica se o ano existe e se ele é um numero isNaN = "is Not a Number" 
         setAnoLancamento(ano);
         setAppliedAnoLancamento(ano);
+        //Salva o ano tanto no campo editável(visual) quanto no filtro aplicado
     } else {
         setAnoLancamento('');
         setAppliedAnoLancamento('');
+        //Se não tiver ano válido, deixa o campo vazio.
     }
-
+   if (versao === 'jogador'){
+        setSelectedVersoes(['jogador'])
+        setAppliedSelectedVersoes(['jogador'])
+   }else if (versao === 'torcedor'){
+        setSelectedVersoes(['torcedor'])
+        setAppliedSelectedVersoes(['torcedor']) 
+   }else{
+        setSelectedVersoes([])
+        setAppliedSelectedVersoes([])
+   }
     if (tipo === 'selecao') {
         setSelectedTypes(['selecao']);
         setAppliedSelectedTypes(['selecao']);
+        //Se for “selecao”, aplica esse tipo.
     }else if (tipo === 'clube'){
         setSelectedTypes(['clube']);
         setAppliedSelectedTypes(['clube']);
@@ -56,13 +72,12 @@ export default function ProdutcPage() {
     setAppliedMinPrice(0);
     setAppliedMaxPrice(1000);
     setAppliedValue('');
-}, [location.state, location.search]);
+    /*Coloca os valores padrão nos filtros de preço e ordenação.
+    O slider de preço começa em 0 até 1000.
+    setValue e setAppliedValue controlam a ordem (crescente ou decrescente) de preços, que aqui está zerada. */
+}, [location.search,location.state ]); //Isso diz: "Execute tudo isso sempre que a URL (location.search) ou o estado (location.state) mudar."
 
-
-
-
-
-    const handleTypeChange = (type) => {
+    const handleTypeChange = (type) => {//Quando o usuário clicar em um checkbox de tipo (clube, selecao, retro):Se já estava marcado, remove, e vice versa.
         setSelectedTypes(prev =>
             prev.includes(type)
                 ? prev.filter(item => item !== type)
@@ -70,15 +85,24 @@ export default function ProdutcPage() {
         );
     };
 
+    const handleVersaoChange = (versao) => {
+    setSelectedVersoes(prev =>
+        prev.includes(versao)
+            ? prev.filter(v => v !== versao)
+            : [...prev, versao]
+    );
+};
+
     // Formatar valor em reais
     const formatCurrency = (value) =>
-        value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });//Transforma um número normal em formato de dinheiro (ex: 1000 vira R$ 1.000,00).
 
     const handleApplyFilters = () => {
         setAppliedMinPrice(minPrice);
         setAppliedMaxPrice(maxPrice);
         setAppliedValue(value);
         setAppliedSelectedTypes(selectedTypes);
+        setAppliedSelectedVersoes(selectedVersoes);
 
         // Validar ano antes de aplicar
         if (anoLancamento === '' || (anoLancamento >= 1900 && anoLancamento <= 2030)) {
@@ -117,8 +141,6 @@ export default function ProdutcPage() {
                         sx={{
                             color: 'black',
                             top: '-10px', // empurra o label pra cima, ajuste conforme necessário
-
-
                             '&.Mui-focused': {
                                 color: 'black',
                                 top: '0px'
@@ -217,7 +239,10 @@ export default function ProdutcPage() {
                             control={
                                 <Checkbox
                                     checked={selectedTypes.includes('selecao')}
-                                    onChange={() => handleTypeChange('selecao')}
+                                    onChange={() => {
+                                        handleTypeChange('selecao');
+                                        
+                                    }}
                                     sx={{
                                         color: '#666', // cor do checkbox quando desmarcado
                                         '&.Mui-checked': {
@@ -247,6 +272,44 @@ export default function ProdutcPage() {
 
                 </div>
                 <p className={styles.horizontalLine}></p>
+                <div className={styles.inputsFilter}>
+                    <Typography gutterBottom>Versão:</Typography>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedTypes.includes('torcedor')}
+                                    onChange={()=> handleVersaoChange('torcedor')}
+                                    sx={{
+                                        color: '#666',
+                                        '&.Mui-checked': {
+                                            color: 'var(--laranja)', // cor quando marcado 
+                                        },
+                                    }}
+                                    
+                                />
+                            }
+                            label="Torcedor"
+                        />
+                         <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedTypes.includes('jogador')}
+                                    onChange={()=> handleVersaoChange('jogador')}
+                                    sx={{
+                                        color: '#666',
+                                        '&.Mui-checked': {
+                                            color: 'var(--laranja)', // cor quando marcado 
+                                        },
+                                    }}
+                                    
+                                />
+                            }
+                            label="Jogador"
+                        />
+                    </FormGroup>
+                </div>
+                <p className={styles.horizontalLine}></p>
                 <div>
                     <Typography gutterBottom>Ano de Lançamento:</Typography>
                     <input
@@ -269,6 +332,7 @@ export default function ProdutcPage() {
                 selectedTypes={appliedSelectedTypes}
                 sortOrder={appliedValue}
                 anoLancamento={appliedAnoLancamento}
+                 selectedVersoes={appliedSelectedVersoes}
             />
         </main>
     )

@@ -129,18 +129,23 @@ export default function Header(){
                            navigate('/')
                            setMenuOpen(!menuOpen)
                         }}>Home</li>
-                        <li onClick={() => {
-                            navigate('/contact') 
-                            setMenuOpen(!menuOpen)
-                        }}>Fale Conosco</li>
+                        
                         <li onClick={()=> {
-                            navigate('/products', {state:{tipo: 'clube'}})
+                            navigate('/products', { state: { versao: 'torcedor' } })
                             setMenuOpen(!menuOpen)
                         }}>Versão Torcedor</li>
+                        <li onClick={()=> {
+                            navigate('/products', { state: { versao: 'jogador' } })
+                            setMenuOpen(!menuOpen)
+                        }}>Versão Jogador</li>
                         <li onClick={()=> {
                             navigate('/products', {state:{tipo: 'retro'}})
                             setMenuOpen(!menuOpen)
                         }}>Retrôs</li>
+                        <li onClick={()=> {
+                            navigate('/products', {state:{clube: 'Fortaleza'}})
+                            setMenuOpen(!menuOpen)
+                        }}>Fortaleza</li>
                         <li onClick={()=>{
                             navigate('/cart')
                             setMenuOpen(!menuOpen)
@@ -151,6 +156,10 @@ export default function Header(){
                             navigate('/login')
                             setMenuOpen(!menuOpen)
                         }}>Minha Conta</li>
+                        <li onClick={() => {
+                            navigate('/contact') 
+                            setMenuOpen(!menuOpen)
+                        }}>Fale Conosco</li>   
                     </ul>
                 </nav>)}
 

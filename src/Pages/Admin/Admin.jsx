@@ -51,7 +51,7 @@ export default function Admin() {
         if (!imagemFinal.match(/\.(jpe?g)(\?.*)?$/i)) {
           imagemFinal += ".jpeg";
         }
-        const camisa = { tipo, nome, tamanhos, preco: precoNumerico, clube, paisOrigem, selecao, anoLancamento,imagem: imagemFinal,descricao };
+        const camisa = { tipo, nome, tamanhos, preco: precoNumerico, clube, paisOrigem, selecao, anoLancamento,imagem: imagemFinal,descricao,versao };
         
         try {
           if (!imagem.startsWith("http")) throw new Error("Insira uma URL válida da imagem.");
@@ -110,6 +110,15 @@ export default function Admin() {
         setPreco(valorFormatado)
       }
 
+      const formatClubName = (valor) => {
+        return valor
+        .toLowerCase()
+        .split(" ")
+        .filter(text => text.trim() !== "")
+        .map(text => text.charAt(0).toUpperCase() + text.slice(1))
+        .join(" ")
+      }
+
   return (
     <main className={styles.adminPage}>
       <form className={styles.formAdmin} onSubmit={handleSubmit}>
@@ -129,7 +138,7 @@ export default function Admin() {
               "&.Mui-focused": {
                 color: "black", // quando focado
               },
-            }} required>Selecione o Tipo de Camisa</InputLabel>
+            }}>Selecione o Tipo de Camisa</InputLabel>
             <Select
               labelId="tipo-label"
               value={tipo}
@@ -212,7 +221,7 @@ export default function Admin() {
               <>
                 <div>
                   <label>Nome do Clube:</label>
-                  <input type="text" value={clube} onChange={(e) => setClube(e.target.value)} required />
+                  <input type="text" value={clube} onChange={(e) => setClube(formatClubName(e.target.value))} required />
                 </div>
                 <div>
                   <label>País de Origem do Clube:</label>

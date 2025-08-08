@@ -60,7 +60,9 @@
 .titleWrapper {
         display: flex;
         flex-direction: column;
-        margin-bottom: 40px;
+        margin-bottom: 10px;
+        margin-right: auto;
+        padding-inline: 5px;
 
         &>span {
             font-size: 0.8rem;
@@ -71,7 +73,15 @@
 
     font-size: 35px;
 }
-
+.priceProduct {
+    font-weight: 700;
+    font-family: var(--Outfit);
+    font-size: 2.3rem;
+    color: #000/*var(--verde)*/;
+    text-align: start;
+    margin-right: auto;
+    padding: 20px 5px;
+}
 .DescritionProduct {
     padding: 20px;
     text-align: center;
@@ -120,8 +130,15 @@
 .quantityWrapper {
   margin-top: 12px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 20px;
+}
+.quantityInputGroup{
+    display: flex;
+    align-items: center;
+    gap: 2px;
 }
 
 .quantityInput {
@@ -132,17 +149,13 @@
   font-size: 16px;
 }
 
-.priceProduct {
-    font-weight: 600;
-    font-family: var(--RobotoM);
-    font-size: 2rem;
-    color: var(--verde);
-    padding: 20px;
-}
+
 
 .FinshButton {
     width: 300px;
     height: 35px;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
     background-color: black;
     color: white;
     cursor: pointer;

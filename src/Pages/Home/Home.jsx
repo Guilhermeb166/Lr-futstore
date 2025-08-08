@@ -36,12 +36,12 @@ export default function Home(){
                 <div>
                     <section className={`${styles.lancamentos} ${styles.lancamentosTailandesas}`}>
                         <h2>Lançamentos Tailandesas</h2>
-                        <Cards camisas={camisasRecentes.filter(camisa => camisa.tipo === 'clube' || camisa.tipo === 'seleção')} />
+                        <Cards camisas={camisasRecentes.filter(camisa => camisa.tipo === 'clube' || camisa.tipo === 'selecao').slice(0,3)} />
                     </section>
                     <section className={`${styles.lancamentos} ${styles.lancamentosRetro}`}>
                         <img src="./img/mini-banner-retro.webp" alt="poster retros" />
                         <h2>Lançamentos Retrô</h2>
-                        <Cards camisas={camisasRecentes.filter(camisa => camisa.tipo === 'retro')}/>
+                        <Cards camisas={camisasRecentes.filter(camisa => camisa.tipo === 'retro').slice(0,3)}/>
                     </section>
                 </div>
             )}

@@ -8,7 +8,7 @@ import { db } from '../../../backend/firebase'; // ajuste o caminho conforme seu
 import { useNavigate } from 'react-router-dom';
 
 
-export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento }) {
+export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, selectedVersoes   }) {
     const [products, setProducts] = useState([])
     //const { addToCart } = useCart()
     const navigate = useNavigate()
@@ -30,6 +30,9 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                     selectedTypes.includes(prod.tipo) ||
                     (selectedTypes.includes('selecao') && prod.selecao?.trim?.() !== '') ||
                     (selectedTypes.includes('clube') && prod.clube?.trim?.() !== '')
+                ) && (
+                    selectedVersoes.length === 0 ||
+                    selectedVersoes.includes(prod.versao)
                 ) &&
                 (!anoLancamento || prod.anoLancamento === anoLancamento)
             )
