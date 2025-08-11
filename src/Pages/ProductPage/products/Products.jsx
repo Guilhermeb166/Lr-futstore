@@ -8,7 +8,7 @@ import { db } from '../../../backend/firebase'; // ajuste o caminho conforme seu
 import { useNavigate } from 'react-router-dom';
 
 
-export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, selectedVersoes   }) {
+export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, selectedVersoes, forcedClub   }) {
     const [products, setProducts] = useState([])
     //const { addToCart } = useCart()
     const navigate = useNavigate()
@@ -20,7 +20,10 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
             //primeiro pegamos todos os produtos
             const snapshot = await getDocs(q)
             let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-
+            if (forcedClub && forcedClub.trim() !== '') {
+                const fc = forcedClub.trim().toLowerCase()
+                data = data.filter(prod => (prod.clube || '').toString().trim().toLowerCase() === fc)
+            } else{
             //filtros
             data = data.filter(prod =>
                 Number(prod.preco) >= minPrice &&
@@ -36,6 +39,7 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                 ) &&
                 (!anoLancamento || prod.anoLancamento === anoLancamento)
             )
+        }
 
             // Ordenação
             if (sortOrder === 'crescente') {

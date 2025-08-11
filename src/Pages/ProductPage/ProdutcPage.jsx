@@ -25,12 +25,16 @@ export default function ProdutcPage() {
     const [appliedAnoLancamento, setAppliedAnoLancamento] = useState('');
     const [appliedSelectedVersoes, setAppliedSelectedVersoes] = useState([]);
 
+    // filtro silencioso vindo da URL (ex: ?clube=Fortaleza)
+    const [silentClub, setSilentClub] = useState(''); // string do clube quando ativado
+
     useEffect(() => {
     const queryParams = new URLSearchParams(location.search);//Cria um objeto para ler os parâmetros da URL.
     const ano = location.state?.anoLancamento || queryParams.get('ano');//pega o anoLancamento que foi passado pela location.state,Se não tiver, pega da URL (queryParams.get('ano')).
     const tipo = location.state?.tipo || queryParams.get('tipo');
     const versao = location.state?.versao ||  queryParams.get('versao');
     //O operador ?. evita erro caso state seja undefined.
+    const clubeRaw = queryParams.get('clube'); //pega clube da URL
   
     if (ano && !isNaN(ano)) {//verifica se o ano existe e se ele é um numero isNaN = "is Not a Number" 
         setAnoLancamento(ano);
@@ -65,6 +69,26 @@ export default function ProdutcPage() {
         setSelectedTypes([]);
         setAppliedSelectedTypes([]);
     }
+
+    // 🔹 Se vier "ceara" ou "fortaleza" na URL, aplica silenciosamente
+    if (clubeRaw) {
+            const trimmed = String(clubeRaw).trim();
+            const lower = trimmed.toLowerCase();
+            // aceita diferentes grafias / acentos
+            if (lower === 'fortaleza' || lower === 'ceara' || lower === 'ceará') {
+                // guarda a string "amigável" (preservando capitalização mínima)
+                const normalized = trimmed.split(' ')
+                    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+                    .join(' ');
+                setSilentClub(normalized); // ex: "Fortaleza" ou "Ceará"
+                // garantir que 'clube' esteja como tipo aplicado para compatibilidade
+                setAppliedSelectedTypes(prev => (prev.includes('clube') ? prev : [...prev, 'clube']));
+            } else {
+                setSilentClub('');
+            }
+        } else {
+            setSilentClub('');
+        }
 
     setValue('');
     setMinPrice(0);
@@ -108,6 +132,13 @@ export default function ProdutcPage() {
         if (anoLancamento === '' || (anoLancamento >= 1900 && anoLancamento <= 2030)) {
             setAppliedAnoLancamento(anoLancamento);
         }
+
+        // Se houver um filtro silencioso ativo, removemos ele agora:
+        if (silentClub) {
+            setSilentClub(''); // desativa o filtro silencioso interno
+            // limpa a query string da URL (remove ?clube=...) para não reaplicar automaticamente
+            navigate('/products', { replace: true });
+        }
     };
 
     return (
@@ -122,6 +153,7 @@ export default function ProdutcPage() {
                         height: '33px', // ajusta a altura aqui
                         display: 'flex',
                         marginBottom: '12px',
+                        margin:'auto',
                         justifyContent: 'center', // centraliza o conteúdo verticalmente
 
                         '& .MuiOutlinedInput-root': {
@@ -327,12 +359,14 @@ export default function ProdutcPage() {
                     variant="contained" className={styles.filterButton}>Filtrar</button>
             </section>
             <Products
+                className={styles.products}
                 minPrice={appliedMinPrice}
                 maxPrice={appliedMaxPrice}
                 selectedTypes={appliedSelectedTypes}
                 sortOrder={appliedValue}
                 anoLancamento={appliedAnoLancamento}
-                 selectedVersoes={appliedSelectedVersoes}
+                selectedVersoes={appliedSelectedVersoes}
+                forcedClub={silentClub}//  quando presente, Products mostrará só esse clube
             />
         </main>
     )

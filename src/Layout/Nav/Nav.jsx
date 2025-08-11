@@ -9,9 +9,7 @@ export default function Nav() {
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate()
 
-    function handleFilterClub ({clube}) {
-        navigate(`/products?clube=${encodeURIComponent(clube)}`);
-    }
+    
 
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, (user) =>{
@@ -43,8 +41,8 @@ export default function Nav() {
                 <li className={styles.navItem}>
                     Ceará e Fortaleza <FaChevronDown />
                     <ul className={styles.dropdown}>
-                        <li onClick={() => handleFilterClub('Ceará')}>Ceará</li>
-                        <li onClick={() => handleFilterClub('Fortaleza')}>Fortaleza</li>
+                        <li onClick={() => navigate(`/products?clube=${encodeURIComponent('Ceará')}`)}>Ceará</li>
+                        <li onClick={() => navigate(`/products?clube=${encodeURIComponent('Fortaleza')}`)}>Fortaleza</li>
                         
                     </ul>
                 </li>

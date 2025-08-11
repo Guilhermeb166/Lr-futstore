@@ -4,6 +4,7 @@
     width: 60%;
     max-width: 1000px;
     gap: 20px 60px;
+   
 }
 
 .productCard {
@@ -66,6 +67,8 @@
         width: 100%;
         justify-content: center;
         gap:55px 45px;
+        position: relative;
+        margin-top: 200px;
     }
 
     .productCard {

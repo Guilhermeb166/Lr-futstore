@@ -165,17 +165,22 @@ header{
 
 
 /* Mostra o botão do menu apenas em telas menores que 600px */
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
     header{
         height: 80px;
         &>div{
             gap: 0;
-            padding-inline: 5px;
             justify-content: space-around;
+            padding-inline: 5px;
             gap: 10%;
+        }
+        .left, .links{
+            flex: 0;
         }
         .logo{
             width: 40%;
+            min-width: 40px;
+            max-width: 80px;
         }
     }
     .menuButton {
@@ -186,7 +191,7 @@ header{
         font-size: 28px;
     }
     .searchControl{
-        max-width: 300px;
+        max-width: 500px;
         width: 65%;
     }
     

@@ -49,7 +49,7 @@ export default function Header(){
 
     useEffect(()=>{
         const handleResize = () =>{
-            const mobile = window.innerWidth <= 767;
+            const mobile = window.innerWidth <= 1024;
             setIsMobile(mobile);
             if(!mobile) setMenuOpen(false);
         }
@@ -143,7 +143,11 @@ export default function Header(){
                             setMenuOpen(!menuOpen)
                         }}>Retrôs</li>
                         <li onClick={()=> {
-                            navigate('/products', {state:{clube: 'Fortaleza'}})
+                            navigate(`/products?clube=${encodeURIComponent('Ceará')}`)
+                            setMenuOpen(!menuOpen)
+                        }}>Ceará</li>
+                        <li onClick={()=> {
+                            navigate(`/products?clube=${encodeURIComponent('Fortaleza')}`)
                             setMenuOpen(!menuOpen)
                         }}>Fortaleza</li>
                         <li onClick={()=>{
@@ -163,7 +167,7 @@ export default function Header(){
                     </ul>
                 </nav>)}
 
-                 {/* Mostra a lista normal em telas maiores que 600px */}
+                 {/* Mostra a lista normal em telas maiores que 1024px */}
                  {!isMobile && (
                     <ul className={styles.links}>
                         

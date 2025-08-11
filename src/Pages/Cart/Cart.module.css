@@ -2,7 +2,7 @@
 .sideCart {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: -500px;
     /* começa fora da tela */
     width: 350px;
     height: 100vh;
@@ -279,6 +279,10 @@
 
 
 @media screen and (max-width:767px) {
+    /*Carrinho lateral*/
+    .sideCart{
+        opacity: 0;
+    }
     .cartPage{
         flex-direction: column;
         height: auto;
