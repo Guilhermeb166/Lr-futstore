@@ -33,10 +33,11 @@ export default function SideCard({ isOpen, onClose }) {
                                     <p  onClick={() => navigation(`/individualProduct/${item.id}`)} className={styles.itemName}>{item.nome}</p>
                                     <p>R$ {Number(item.preco).toFixed(2)}</p>
                                     <p>Quantidade: {item.quantity}</p>
+                                    <p>Tamanho: {item.tamanho}</p>
                                 </div>
                                 <IoTrashOutline
                                     className={styles.removeIcon}
-                                    onClick={() => removeFromCart(item.id)}
+                                    onClick={() => removeFromCart(item.id, item.tamanho)}
                                 />
                             </li>
                         ))}
