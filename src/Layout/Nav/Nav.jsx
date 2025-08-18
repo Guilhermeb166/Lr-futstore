@@ -29,20 +29,20 @@ export default function Nav() {
                 <li className={styles.navItem}>
                     Camisas Tailandesas <FaChevronDown />
                     <ul className={styles.dropdown}>
-                        <li onClick={() => navigate('/products', { state: {tipo: 'clube', anoLancamento: '2025' }})}>Clubes Temporada 25/26</li>
-                        <li onClick={() =>  navigate('/products', { state: {tipo: 'clube', anoLancamento: '2024' }})}>Clubes Temporada 24/25</li>
-                        <li onClick={() => navigate('/products', { state: { tipo: 'retro' }})}> Retrôs </li>
-                        <li onClick={() =>  navigate('/products', { state: { tipo: 'selecao' }})}>Seleções</li>
-                        <li onClick={() => navigate('/products', { state: { versao: 'jogador' } })}>Versão Jogador </li>
-                        <li onClick={() => navigate('/products', { state: { versao: 'torcedor' } })}>Versão Torcedor </li>
+                        <li onClick={() => navigate('/', { state: {tipo: 'clube', anoLancamento: '2025' }})}>Clubes Temporada 25/26</li>
+                        <li onClick={() =>  navigate('/', { state: {tipo: 'clube', anoLancamento: '2024' }})}>Clubes Temporada 24/25</li>
+                        <li onClick={() => navigate('/', { state: { tipo: 'retro' }})}> Retrôs </li>
+                        <li onClick={() =>  navigate('/', { state: { tipo: 'selecao' }})}>Seleções</li>
+                        <li onClick={() => navigate('/', { state: { versao: 'jogador' } })}>Versão Jogador </li>
+                        <li onClick={() => navigate('/', { state: { versao: 'torcedor' } })}>Versão Torcedor </li>
                     </ul>
                 </li>
 
                 <li className={styles.navItem}>
                     Ceará e Fortaleza <FaChevronDown />
                     <ul className={styles.dropdown}>
-                        <li onClick={() => navigate(`/products?clube=${encodeURIComponent('Ceará')}`)}>Ceará</li>
-                        <li onClick={() => navigate(`/products?clube=${encodeURIComponent('Fortaleza')}`)}>Fortaleza</li>
+                        <li onClick={() => navigate(`/?clube=${encodeURIComponent('Ceará')}`)}>Ceará</li>
+                        <li onClick={() => navigate(`/?clube=${encodeURIComponent('Fortaleza')}`)}>Fortaleza</li>
                         
                     </ul>
                 </li>

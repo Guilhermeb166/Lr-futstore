@@ -1,8 +1,8 @@
 .ProductsContainer {
     display: flex;
     flex-wrap: wrap;
-    width: 60%;
-    max-width: 1000px;
+    width: 100%;
+
     gap: 20px 60px;
    
 }

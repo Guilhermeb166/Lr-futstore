@@ -16,8 +16,9 @@ export default function Header(){
     const [suggestions, setSuggestions] = useState([])
     const [username,setUsername] = useState(null)
     const [menuOpen,setMenuOpen] = useState(false)
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState(false)
     const [cartOpen,setCartOpen] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
     const navigate = useNavigate();
     
     const { cartItems } = useCart();
@@ -75,6 +76,17 @@ export default function Header(){
         })
         return () => unsubscribe();
     },[])
+
+    useEffect(()=>{
+            const unsubscribe = onAuthStateChanged(auth, (user) =>{
+                if(user && user.email === process.env.REACT_APP_ADMIN_EMAIL){
+                    setIsAdmin(true)
+                } else {
+                    setIsAdmin(false)
+                }
+            })
+            return () => unsubscribe()
+        }, [])
    
     return(
         <header>
@@ -125,29 +137,33 @@ export default function Header(){
                 <nav className={`${styles.sideMenu} ${menuOpen ? styles.open : ''}`}>
                     <IoClose className={styles.closeMenu} onClick={()=> setMenuOpen(!menuOpen)}/>
                     <ul className={styles.linksMobile}>
-                        <li onClick={() => {
+                        {/*<li onClick={() => {
                            navigate('/')
                            setMenuOpen(!menuOpen)
-                        }}>Home</li>
-                        
+                        }}>Home</li>*/}
+                        {isAdmin && (
+                        <li className={styles.linksNav} onClick={() => navigate('/admin')}>
+                            Painel Admin
+                        </li>
+                        )}
                         <li onClick={()=> {
-                            navigate('/products', { state: { versao: 'torcedor' } })
+                            navigate('/', { state: { versao: 'torcedor' } })
                             setMenuOpen(!menuOpen)
                         }}>Versão Torcedor</li>
                         <li onClick={()=> {
-                            navigate('/products', { state: { versao: 'jogador' } })
+                            navigate('/', { state: { versao: 'jogador' } })
                             setMenuOpen(!menuOpen)
                         }}>Versão Jogador</li>
                         <li onClick={()=> {
-                            navigate('/products', {state:{tipo: 'retro'}})
+                            navigate('/', {state:{tipo: 'retro'}})
                             setMenuOpen(!menuOpen)
                         }}>Retrôs</li>
                         <li onClick={()=> {
-                            navigate(`/products?clube=${encodeURIComponent('Ceará')}`)
+                            navigate(`/?clube=${encodeURIComponent('Ceará')}`)
                             setMenuOpen(!menuOpen)
                         }}>Ceará</li>
                         <li onClick={()=> {
-                            navigate(`/products?clube=${encodeURIComponent('Fortaleza')}`)
+                            navigate(`/?clube=${encodeURIComponent('Fortaleza')}`)
                             setMenuOpen(!menuOpen)
                         }}>Fortaleza</li>
                         <li onClick={()=>{
