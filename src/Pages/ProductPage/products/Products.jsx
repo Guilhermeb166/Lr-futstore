@@ -12,6 +12,7 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
     const [products, setProducts] = useState([])
     //const { addToCart } = useCart()
     const [loading, setLoading] = useState(true)
+    const [loadedImages, setLoadedImages] = useState({}) // controla o loading por produto
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -66,6 +67,11 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
         fetchProducts()
 
     }, [minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, forcedClub, selectedVersoes])
+
+    const handleImageLoad = (id) => {
+        setLoadedImages((prev) => ({ ...prev, [id]: true }))
+    }
+
     return (
         <section className={styles.ProductsContainer}>
             {!loading ? (
@@ -75,17 +81,21 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
             ) : (
                 products.map(prod => (
                     <div key={prod.id} className={styles.productCard} onClick={() => navigate(`/individualProduct/${prod.id}`)}>
-                        
-                        <img src={prod.image} alt={prod.nome} />
-                        <div>
-                            <h3>{prod.nome}</h3>
-
-                            <p>{Number(prod.preco).toLocaleString('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL',
-                                minimumFractionDigits: 2
-                            })}</p>
-                        </div>
+                        {!loadedImages[prod.id] && (
+                            <AiOutlineLoading3Quarters className={styles.cardLoading} />
+                        )}
+                        <img src={prod.image} alt={prod.nome} onLoad={() => handleImageLoad(prod.id)} 
+                            style={{ display: loadedImages[prod.id] ? "block" : "none" }}/>
+                        {loadedImages[prod.id] && (
+                            <div>
+                                <h3>{prod.nome}</h3>
+                                <p>{Number(prod.preco).toLocaleString('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL',
+                                    minimumFractionDigits: 2
+                                })}</p>
+                            </div>
+                        )}
                     </div>
                 ))
             )}
