@@ -2,7 +2,7 @@
 import styles from './Home.module.css'
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // serve para pegar a URL atual e os dados que foram passados pra essa página.
-import { MenuItem, Select, FormControl, InputLabel, Checkbox, FormGroup, FormControlLabel, Slider, Typography } from '@mui/material';
+import { MenuItem, Select, FormControl, InputLabel, Checkbox, FormGroup, FormControlLabel, /*Slider,*/ Typography } from '@mui/material';
 import Products from '../ProductPage/products/Products';
 import { CiFilter } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
@@ -123,8 +123,8 @@ export default function ProdutcPage() {
 };
 
     // Formatar valor em reais
-    const formatCurrency = (value) =>
-        value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });//Transforma um número normal em formato de dinheiro (ex: 1000 vira R$ 1.000,00).
+   /* const formatCurrency = (value) =>
+        value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });*///Transforma um número normal em formato de dinheiro (ex: 1000 vira R$ 1.000,00).
 
     const handleApplyFilters = () => {
         setAppliedMinPrice(minPrice);
@@ -321,7 +321,7 @@ export default function ProdutcPage() {
                         }}>Mais Antigos</MenuItem>
                     </Select>
                 </FormControl>
-                <div className={styles.priceFilter}>
+                {/*<div className={styles.priceFilter}>
                     <Typography gutterBottom>Preço Mínimo: {formatCurrency(minPrice)}</Typography>
                     <Slider
                         value={minPrice}
@@ -359,7 +359,7 @@ export default function ProdutcPage() {
                             },
                         }}
                     />
-                </div>
+                </div>*/}
                 <p className={styles.horizontalLine}></p>
                 <div className={styles.inputsFilter}>
                     <Typography gutterBottom>Tipo:</Typography>
