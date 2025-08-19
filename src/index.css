@@ -44,7 +44,9 @@ html, body, #root {
   background-color: #fdfdfd;
   
 }
-
+main{
+  flex: 1;
+}
 @media screen and (max-width:767px){
  
 }

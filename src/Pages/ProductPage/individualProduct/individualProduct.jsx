@@ -25,7 +25,7 @@ export default function IndividualProduct() {
         };
         fetchProduct();
     }, [id]);
-    if (!product) return <p>Carregando...</p>;
+    if (!product) return <main style={{display:"flex", alignItems:"center"}}><p className={styles.loading}>Carregando...</p></main>;
     return (
         <main className={styles.individualProduct}>
             <section className={styles.productDetailsLeft}>
