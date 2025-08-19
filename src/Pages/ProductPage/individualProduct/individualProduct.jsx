@@ -5,13 +5,16 @@ import { doc, getDoc, } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../../Context/AppContext';
 import { useParams } from 'react-router-dom';
-import { db } from '../../../backend/firebase'
+import { db, auth } from '../../../backend/firebase'
+import { onAuthStateChanged } from 'firebase/auth';
+
 export default function IndividualProduct() {
     const {addToCart} = useCart()
     const { id } = useParams();
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [product, setProduct] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -25,6 +28,18 @@ export default function IndividualProduct() {
         };
         fetchProduct();
     }, [id]);
+
+    useEffect(()=>{
+                const unsubscribe = onAuthStateChanged(auth, (user) =>{
+                    if(user && user.email === process.env.REACT_APP_ADMIN_EMAIL){
+                        setIsAdmin(true)
+                    } else {
+                        setIsAdmin(false)
+                    }
+                })
+                return () => unsubscribe()
+            }, [])
+
     if (!product) return <main style={{display:"flex", alignItems:"center"}}><p className={styles.loading}>Carregando...</p></main>;
     return (
         <main className={styles.individualProduct}>
@@ -33,8 +48,13 @@ export default function IndividualProduct() {
                     <img src={product.image} alt={product.nome} className={styles.ImageProduct} />
                 </div>
             </section>
+
             <p className={styles.divisoria}></p>
+
             <section className={styles.productDetailsRight}>
+                {isAdmin && (
+                    <button className={styles.deleteProductBtn}>Excluir Produto</button>
+                )}
                 <div className={styles.titleWrapper}>
                     <h2 className={styles.TitleProduct}>{product.nome}</h2>
                     <span>Ano de lançamento:  {product.anoLancamento}</span>
