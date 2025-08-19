@@ -176,10 +176,10 @@ export default function Header(){
                             navigate('/login')
                             setMenuOpen(!menuOpen)
                         }}>Minha Conta</li>
-                        <li onClick={() => {
+                        {/*<li onClick={() => {
                             navigate('/contact') 
                             setMenuOpen(!menuOpen)
-                        }}>Fale Conosco</li>   
+                        }}>Fale Conosco</li>*/}   
                     </ul>
                 </nav>)}
 

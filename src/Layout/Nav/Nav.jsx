@@ -31,10 +31,9 @@ export default function Nav() {
                     <ul className={styles.dropdown}>
                         <li onClick={() => navigate('/', { state: {tipo: 'clube', anoLancamento: '2025' }})}>Clubes Temporada 25/26</li>
                         <li onClick={() =>  navigate('/', { state: {tipo: 'clube', anoLancamento: '2024' }})}>Clubes Temporada 24/25</li>
-                        <li onClick={() => navigate('/', { state: { tipo: 'retro' }})}> Retrôs </li>
+                        <li onClick={() => navigate('/', { state: { tipo: 'retro' }})}> Retrôs</li>
                         <li onClick={() =>  navigate('/', { state: { tipo: 'selecao' }})}>Seleções</li>
-                        <li onClick={() => navigate('/', { state: { versao: 'jogador' } })}>Versão Jogador </li>
-                        <li onClick={() => navigate('/', { state: { versao: 'torcedor' } })}>Versão Torcedor </li>
+                        
                     </ul>
                 </li>
 
@@ -46,7 +45,14 @@ export default function Nav() {
                         
                     </ul>
                 </li>
-                <li className={styles.linksNav} onClick={() => { navigate('/contact') }}>Fale Conosco</li>
+                <li className={styles.navItem}>
+                    Versão da Camisa <FaChevronDown />
+                    <ul className={styles.dropdown}>
+                        <li onClick={() => navigate('/', { state: { versao: 'jogador' } })}>Versão Jogador</li>
+                        <li onClick={() => navigate('/', { state: { versao: 'torcedor' } })}>Versão Torcedor</li>
+                    </ul>
+                </li>
+                {/*<li className={styles.linksNav} onClick={() => { navigate('/contact') }}>Fale Conosco</li>*/}
                 {isAdmin && (
                 <li className={styles.linksNav} onClick={() => navigate('/admin')}>
                     Painel Admin
