@@ -35,10 +35,14 @@ input[type="number"] {
 ::-webkit-scrollbar {
   display: none;
 }
-
+html, body, #root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
  body{
   background-color: #fdfdfd;
-  height: auto;
+  
 }
 
 @media screen and (max-width:767px){

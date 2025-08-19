@@ -12,7 +12,7 @@ export default function ProdutcPage() {
     const location = useLocation();//Pega informações da URL (como filtros que vieram de outra página) e deixa guardado na variável location.
     const navigate = useNavigate()
     // Estados visuais
-    const [maxPrice, setMaxPrice] = useState(1000)
+    const [maxPrice, setMaxPrice] = useState(200)
     const [minPrice, setMinPrice] = useState(0)
     const [value, setValue] = useState('');
     const [selectedTypes, setSelectedTypes] = useState([]);
@@ -20,7 +20,7 @@ export default function ProdutcPage() {
     const [selectedVersoes, setSelectedVersoes] = useState([]);
 
     // Estados aplicados(só mudam quando o botão “Filtrar” é clicado):
-    const [appliedMaxPrice, setAppliedMaxPrice] = useState(1000);
+    const [appliedMaxPrice, setAppliedMaxPrice] = useState(200);
     const [appliedMinPrice, setAppliedMinPrice] = useState(0);
     const [appliedValue, setAppliedValue] = useState('');
     const [appliedSelectedTypes, setAppliedSelectedTypes] = useState([]);
@@ -31,6 +31,7 @@ export default function ProdutcPage() {
     const [silentClub, setSilentClub] = useState(''); // string do clube quando ativado
 
     const [showFilter, setShowFilter] = useState(false)
+    
 
     useEffect(() => {
     const queryParams = new URLSearchParams(location.search);//Cria um objeto para ler os parâmetros da URL.
@@ -96,12 +97,12 @@ export default function ProdutcPage() {
 
     setValue('');
     setMinPrice(0);
-    setMaxPrice(1000);
+    setMaxPrice(200);
     setAppliedMinPrice(0);
-    setAppliedMaxPrice(1000);
+    setAppliedMaxPrice(200);
     setAppliedValue('');
     /*Coloca os valores padrão nos filtros de preço e ordenação.
-    O slider de preço começa em 0 até 1000.
+    O slider de preço começa em 0 até 200.
     setValue e setAppliedValue controlam a ordem (crescente ou decrescente) de preços, que aqui está zerada. */
 }, [location.search,location.state ]); //Isso diz: "Execute tudo isso sempre que a URL (location.search) ou o estado (location.state) mudar."
 
@@ -421,7 +422,7 @@ export default function ProdutcPage() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={selectedTypes.includes('torcedor')}
+                                    checked={selectedVersoes.includes('torcedor')}
                                     onChange={()=> handleVersaoChange('torcedor')}
                                     sx={{
                                         color: '#666',
@@ -437,7 +438,7 @@ export default function ProdutcPage() {
                          <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={selectedTypes.includes('jogador')}
+                                    checked={selectedVersoes.includes('jogador')}
                                     onChange={()=> handleVersaoChange('jogador')}
                                     sx={{
                                         color: '#666',
