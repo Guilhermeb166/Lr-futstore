@@ -139,9 +139,9 @@ export default function Login(){
                     <span>Usamos seu e-mail de forma 100% segura para:</span><br/>
                     <p>
                         Identificar seu perfil <br />
-                        Notificar sobre pedidos <br />
-                        Gerenciar seu histórico de compras <br />
-                        Garantir mais segurança na compra
+                        Notificar sobre lançamentos <br />
+                        Gerenciar seu histórico no carrinho <br />
+                        
                     </p>
                 </div>
             </section>
