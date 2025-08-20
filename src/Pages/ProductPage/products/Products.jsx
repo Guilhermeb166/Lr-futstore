@@ -8,9 +8,10 @@ import { db } from '../../../backend/firebase'; // ajuste o caminho conforme seu
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, selectedVersoes, forcedClub   }) {
+export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, selectedVersoes, forcedClub, onProductsCountChange   }) {
     const [products, setProducts] = useState([])
-    //const { addToCart } = useCart()
+    // eslint-disable-next-line
+    const [productsCount, setProductsCount] = useState(0);   
     const [loading, setLoading] = useState(true)
     const [loadedImages, setLoadedImages] = useState({}) // controla o loading por produto
     const navigate = useNavigate()
@@ -51,22 +52,37 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                 } else if (sortOrder === 'descrescente') {
                     data.sort((a, b) => b.preco - a.preco);
                 } else if (sortOrder === 'recentes') {
-                    data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                     data.sort((a, b) => {
+                        // Para Timestamp do Firestore
+                        const timeA = a.createdAt ? a.createdAt.seconds : 0;
+                        const timeB = b.createdAt ? b.createdAt.seconds : 0;
+                        return timeB - timeA; // Mais recentes primeiro (maior timestamp)
+                    });
                 } else if (sortOrder === 'antigos') {
-                    data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                     data.sort((a, b) => {
+                        // Para Timestamp do Firestore
+                        const timeA = a.createdAt ? a.createdAt.seconds : 0;
+                        const timeB = b.createdAt ? b.createdAt.seconds : 0;
+                        return timeA - timeB; // Mais antigos primeiro (menor timestamp)
+                    });
                 }
 
                 setProducts(data)
+                setProductsCount(data.length); // Atualiza a quantidade de produtos
+                if (onProductsCountChange) {
+                    onProductsCountChange(data.length);
+                }
             }catch (error) {
                 console.error('Erro ao buscar produtos:', error);
                 setProducts([]);
+                setProductsCount(0); // Zera a contagem em caso de erro
             } finally {
                 setLoading(true);
             }
         }
         fetchProducts()
 
-    }, [minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, forcedClub, selectedVersoes])
+    }, [minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, forcedClub, selectedVersoes,onProductsCountChange ])
 
     const handleImageLoad = (id) => {
         setLoadedImages((prev) => ({ ...prev, [id]: true }))
