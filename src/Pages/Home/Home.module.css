@@ -129,6 +129,9 @@
         align-items: center;
         
     }
+    .filterControls{
+        gap: 7px;
+    }
     .openFilterBtn{
         margin-left: auto;
         max-width: 40px;
