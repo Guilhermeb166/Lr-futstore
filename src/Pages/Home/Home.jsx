@@ -288,7 +288,7 @@ export default function ProdutcPage() {
                         display: 'flex',
                         borderRadius:"5px",
                         justifyContent: 'center', // centraliza o conteúdo verticalmente
-                        
+
                         '& .MuiOutlinedInput-root': {
                             height: '40px',
                             borderRadius:"5px",
@@ -339,14 +339,14 @@ export default function ProdutcPage() {
                         MenuProps={{
                             PaperProps: {
                             sx: {
-                                backgroundColor: '#333', // fundo do dropdown
+                                backgroundColor: '#E7E7E7FF', // fundo do dropdown
                                 color: 'white',          // cor do texto
                 
                 
                                 '& .MuiMenuItem-root': {
                                 color: 'white',
                                 '&.Mui-selected': {
-                                    backgroundColor: '#333',
+                                    backgroundColor: '#E7E7E7FF',
                                 },
                                 '&:hover': {
                                     backgroundColor: '#222',
@@ -356,13 +356,13 @@ export default function ProdutcPage() {
                         }}
                         >
                         <MenuItem value="" sx={{
-                            backgroundColor: "#333",
+                            backgroundColor: "#E7E7E7FF",
                             color: "white",
                             "&:hover": {
                             backgroundColor: "#222", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#444 !important", // quando selecionado
+                            backgroundColor: "#979797FF !important", // quando selecionado
                             color: "white",
                             },
                             "&.Mui-focusVisible": {
@@ -375,7 +375,7 @@ export default function ProdutcPage() {
                             <em>None</em>
                         </MenuItem>
                         <MenuItem value={"crescente"} sx={{
-                            backgroundColor: "#333",
+                            backgroundColor: "#E7E7E7FF",
                             color: "white",
                             "&:hover": {
                             backgroundColor: "#222", // hover
@@ -392,7 +392,7 @@ export default function ProdutcPage() {
                             },
                         }}>Preço: Menor → Maior</MenuItem>
                         <MenuItem value={'descrescente'}sx={{
-                            backgroundColor: "#333",
+                            backgroundColor: "#E7E7E7FF",
                             color: "white",
                             "&:hover": {
                             backgroundColor: "#222", // hover
@@ -409,7 +409,7 @@ export default function ProdutcPage() {
                             },
                         }}>Preço: Maior → Menor</MenuItem>
                         <MenuItem value={"recentes"}sx={{
-                            backgroundColor: "#333",
+                            backgroundColor: "#E7E7E7FF",
                             color: "white",
                             "&:hover": {
                             backgroundColor: "#222", // hover
@@ -426,7 +426,7 @@ export default function ProdutcPage() {
                             },
                         }}>Mais Recentes</MenuItem>
                         <MenuItem value={"antigos"}sx={{
-                            backgroundColor: "#333",
+                            backgroundColor: "#E7E7E7FF",
                             color: "white",
                             "&:hover": {
                             backgroundColor: "#222", // hover
