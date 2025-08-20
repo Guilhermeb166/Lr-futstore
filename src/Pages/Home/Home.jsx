@@ -286,11 +286,15 @@ export default function ProdutcPage() {
                         color:'white',
                         height: '33px', // ajusta a altura aqui
                         display: 'flex',
+                        borderRadius:"5px",
                         justifyContent: 'center', // centraliza o conteúdo verticalmente
+                        
                         '& .MuiOutlinedInput-root': {
                             height: '40px',
+                            borderRadius:"5px",
                             '& fieldset': {
                                 borderColor: '#C7C7C7FF',
+                                
                             },
                             '&:hover fieldset': {
                                 borderColor: '#C7C7C7FF',
@@ -321,7 +325,7 @@ export default function ProdutcPage() {
                             color: 'black',
                             padding: '0px', // padding reduzido aqui
                             height: '40px', // ou ajuste manualmente a altura
-                
+                            
                             '& .MuiSvgIcon-root': {
                                 color: 'black', // seta preta
                             },
