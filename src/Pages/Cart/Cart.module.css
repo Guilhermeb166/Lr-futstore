@@ -308,6 +308,7 @@
     }
     .sendRequest{
         height: 35px;
+        font-size: 1.1rem;
     }
 }
 @media screen and (max-width:405px){
