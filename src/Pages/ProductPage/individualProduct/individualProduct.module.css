@@ -167,9 +167,9 @@
     cursor: pointer;
     border-radius: 5px;
     border: none;
-    transition: 1s;
+    transition: 0.5s;
 
-    &.FinshButton:hover {
+    &:hover {
         color: orange;
     }
 }
@@ -233,5 +233,8 @@
     .FinshButton{
         font-size: 1.2rem;
         height: 40px;
+        &:hover{
+            color: #fff;
+        }
     }
 }

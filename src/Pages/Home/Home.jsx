@@ -151,6 +151,7 @@ export default function ProdutcPage() {
             // limpa a query string da URL (remove ?clube=...) para não reaplicar automaticamente
             navigate('/products', { replace: true });
         }
+        setShowFilter(false)
     };
 
     const handleFilter =()=>{
