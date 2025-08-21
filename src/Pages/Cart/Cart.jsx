@@ -13,17 +13,17 @@ export default function Cart() {
     const [nome,setNome] = useState('')
     const [endereco,setEndereco] = useState('')
     const [contato, setContato] = useState('');
-    const [email, setEmail] = useState('    ');
+    const [payment, setPayment] = useState('');
 
     const subtotal = cartItems.reduce((acc, item) => acc + item.preco * item.quantity, 0);
 
     const enviarPedido=()=>{
 
         if (opcaoEntrega === 'entrega') {
-            if (!nome || !contato || !email || !cep || !endereco) {
+            if (!nome || !contato || !payment || !cep || !endereco) {
                 alert('Por favor, preencha todos os campos para a entrega.');
                 return;
-            } else if (!nome.trim() || !contato.trim() || !email.trim() || !cep.trim() || !endereco.trim()){
+            } else if (!nome.trim() || !contato.trim() || !payment.trim() || !cep.trim() || !endereco.trim()){
                 alert('Preencha todos os campos corretamente.');
                 return;
             }
@@ -41,7 +41,7 @@ export default function Cart() {
 
         if(opcaoEntrega==='entrega'){
             mensagem+= `%0A*Entrega solicitada*%0A`
-            mensagem += `Nome: ${nome}%0A Contato: ${contato}%0A E-mail: ${email}%0A CEP: ${cep}%0A Endereço: ${endereco}%0A`;
+            mensagem += `Nome: ${nome}%0A Contato: ${contato}%0A Forma de Pagamento: ${payment}%0A CEP: ${cep}%0A Endereço: ${endereco}%0A`;
         }else {
             mensagem += `%0A*Forma de entrega:* Retirada na loja`;
         }
@@ -126,10 +126,10 @@ export default function Cart() {
                                 <div className={styles.FormDescrition}>
                                     <input
                                         className={styles.BarSeachrForm}
-                                        type="email"
-                                        placeholder="Informe seu E-mail"
-                                        value={email}
-                                        onChange={(e)=>setEmail(e.target.value)}
+                                        type="payment"
+                                        placeholder="Forma de Pagamento"
+                                        value={payment}
+                                        onChange={(e)=>setPayment(e.target.value)}
                                     />
                                 </div>
                                 <div className={styles.FormDescrition}>

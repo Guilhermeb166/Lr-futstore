@@ -252,6 +252,7 @@
     align-items: center;
     justify-content: center;
     height: 30px;
+    width: 100%;
     position: relative;
     letter-spacing: 1.5px;
     background-color: #000;
