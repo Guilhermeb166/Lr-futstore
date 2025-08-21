@@ -162,7 +162,6 @@ export default function ProdutcPage() {
             
                 <section className={`${styles.filterControl} ${showFilter ? styles.active : ''}`}>
                     <IoClose onClick={handleFilter} className={styles.closeFilterBtn}/>
-                <p className={styles.horizontalLine}></p>
                 <div className={styles.inputsFilter}>
                     <Typography gutterBottom>Tipo:</Typography>
                     <FormGroup>
@@ -339,7 +338,7 @@ export default function ProdutcPage() {
                         MenuProps={{
                             PaperProps: {
                             sx: {
-                                backgroundColor: '#E7E7E7FF', // fundo do dropdown
+                                backgroundColor: '#B8B8B8FF', // fundo do dropdown
                                 color: 'white',          // cor do texto
                 
                 
@@ -349,97 +348,97 @@ export default function ProdutcPage() {
                                     backgroundColor: '#E7E7E7FF',
                                 },
                                 '&:hover': {
-                                    backgroundColor: '#222',
+                                    backgroundColor: '#464646FF',
                                 },
                                 },
                             }}
                         }}
                         >
                         <MenuItem value="" sx={{
-                            backgroundColor: "#E7E7E7FF",
+                            backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#222", // hover
+                            backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
                             backgroundColor: "#979797FF !important", // quando selecionado
                             color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#444", // quando focado (ex: pelo teclado)
+                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#222", // quando clicado
+                            backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>
                             <em>None</em>
                         </MenuItem>
                         <MenuItem value={"crescente"} sx={{
-                            backgroundColor: "#E7E7E7FF",
+                            backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#222", // hover
+                            backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#444 !important", // quando selecionado
+                            backgroundColor: "#929292FF !important", // quando selecionado
                             color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#444", // quando focado (ex: pelo teclado)
+                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#222", // quando clicado
+                            backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>Preço: Menor → Maior</MenuItem>
                         <MenuItem value={'descrescente'}sx={{
-                            backgroundColor: "#E7E7E7FF",
+                            backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#222", // hover
+                            backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#444 !important", // quando selecionado
+                            backgroundColor: "#929292FF !important", // quando selecionado
                             color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#444", // quando focado (ex: pelo teclado)
+                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#222", // quando clicado
+                            backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>Preço: Maior → Menor</MenuItem>
                         <MenuItem value={"recentes"}sx={{
-                            backgroundColor: "#E7E7E7FF",
+                            backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#222", // hover
+                            backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#444 !important", // quando selecionado
+                            backgroundColor: "#929292FF !important", // quando selecionado
                             color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#444", // quando focado (ex: pelo teclado)
+                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#222", // quando clicado
+                            backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>Mais Recentes</MenuItem>
                         <MenuItem value={"antigos"}sx={{
-                            backgroundColor: "#E7E7E7FF",
+                            backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#222", // hover
+                            backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#444 !important", // quando selecionado
+                            backgroundColor: "#929292FF !important", // quando selecionado
                             color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#444", // quando focado (ex: pelo teclado)
+                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#222", // quando clicado
+                            backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>Mais Antigos</MenuItem>
                     </Select>
