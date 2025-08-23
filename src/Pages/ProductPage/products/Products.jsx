@@ -8,10 +8,10 @@ import { db } from '../../../backend/firebase'; // ajuste o caminho conforme seu
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, selectedVersoes, forcedClub, onProductsCountChange   }) {
+export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, selectedVersoes, forcedClub, onProductsCountChange, retro }) {
     const [products, setProducts] = useState([])
     // eslint-disable-next-line
-    const [productsCount, setProductsCount] = useState(0);   
+    const [productsCount, setProductsCount] = useState(0);
     const [loading, setLoading] = useState(true)
     const [loadedImages, setLoadedImages] = useState({}) // controla o loading por produto
     const navigate = useNavigate()
@@ -28,7 +28,7 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                 if (forcedClub && forcedClub.trim() !== '') {
                     const fc = forcedClub.trim().toLowerCase()
                     data = data.filter(prod => (prod.clube || '').toString().trim().toLowerCase() === fc)
-                } else{
+                } else {
                     //filtros
                     data = data.filter(prod =>
                         Number(prod.preco) >= minPrice &&
@@ -42,7 +42,8 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                             selectedVersoes.length === 0 ||
                             selectedVersoes.includes(prod.versao)
                         ) &&
-                        (!anoLancamento || prod.anoLancamento === anoLancamento)
+                        (!anoLancamento || prod.anoLancamento === anoLancamento) &&
+                        (!retro || prod.retro === retro)
                     )
                 }
 
@@ -52,14 +53,14 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                 } else if (sortOrder === 'descrescente') {
                     data.sort((a, b) => b.preco - a.preco);
                 } else if (sortOrder === 'recentes') {
-                     data.sort((a, b) => {
+                    data.sort((a, b) => {
                         // Para Timestamp do Firestore
                         const timeA = a.createdAt ? a.createdAt.seconds : 0;
                         const timeB = b.createdAt ? b.createdAt.seconds : 0;
                         return timeB - timeA; // Mais recentes primeiro (maior timestamp)
                     });
                 } else if (sortOrder === 'antigos') {
-                     data.sort((a, b) => {
+                    data.sort((a, b) => {
                         // Para Timestamp do Firestore
                         const timeA = a.createdAt ? a.createdAt.seconds : 0;
                         const timeB = b.createdAt ? b.createdAt.seconds : 0;
@@ -72,7 +73,7 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                 if (onProductsCountChange) {
                     onProductsCountChange(data.length);
                 }
-            }catch (error) {
+            } catch (error) {
                 console.error('Erro ao buscar produtos:', error);
                 setProducts([]);
                 setProductsCount(0); // Zera a contagem em caso de erro
@@ -82,7 +83,7 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
         }
         fetchProducts()
 
-    }, [minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, forcedClub, selectedVersoes,onProductsCountChange ])
+    }, [minPrice, maxPrice, selectedTypes, sortOrder, anoLancamento, forcedClub, selectedVersoes, onProductsCountChange, retro])
 
     const handleImageLoad = (id) => {
         setLoadedImages((prev) => ({ ...prev, [id]: true }))
@@ -91,8 +92,8 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
     return (
         <section className={styles.ProductsContainer}>
             {!loading ? (
-                <AiOutlineLoading3Quarters className={styles.loading}/>
-            ) : products.length === 0 ?(
+                <AiOutlineLoading3Quarters className={styles.loading} />
+            ) : products.length === 0 ? (
                 <p>Nenhum produto encontrado.</p>
             ) : (
                 products.map(prod => (
@@ -100,8 +101,8 @@ export default function Products({ minPrice, maxPrice, selectedTypes, sortOrder,
                         {!loadedImages[prod.id] && (
                             <AiOutlineLoading3Quarters className={styles.cardLoading} />
                         )}
-                        <img src={prod.image} alt={prod.nome} onLoad={() => handleImageLoad(prod.id)} 
-                            style={{ display: loadedImages[prod.id] ? "block" : "none" }}/>
+                        <img src={prod.image} alt={prod.nome} onLoad={() => handleImageLoad(prod.id)}
+                            style={{ display: loadedImages[prod.id] ? "block" : "none" }} />
                         {loadedImages[prod.id] && (
                             <div>
                                 <h3>{prod.nome}</h3>

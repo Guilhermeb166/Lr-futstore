@@ -57,7 +57,7 @@ export default function IndividualProduct() {
                 )}
                 <div className={styles.titleWrapper}>
                     <h2 className={styles.TitleProduct}>{product.nome}</h2>
-                    <span>Ano de lançamento:  {product.anoLancamento}</span>
+                    {/*<span>Ano de lançamento:  {product.anoLancamento}</span>*/}
                 </div>
                  <p className={styles.priceProduct}>{Number(product.preco).toLocaleString('pt-BR', {
                     style: 'currency',

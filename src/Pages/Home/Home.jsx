@@ -18,6 +18,7 @@ export default function ProdutcPage() {
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [anoLancamento, setAnoLancamento] = useState('');
     const [selectedVersoes, setSelectedVersoes] = useState([]);
+    const [isRetro, setIsRetro] = useState(false); // checkbox retrô
 
     // Estados aplicados(só mudam quando o botão “Filtrar” é clicado):
     const [appliedMaxPrice, setAppliedMaxPrice] = useState(200);
@@ -26,22 +27,24 @@ export default function ProdutcPage() {
     const [appliedSelectedTypes, setAppliedSelectedTypes] = useState([]);
     const [appliedAnoLancamento, setAppliedAnoLancamento] = useState('');
     const [appliedSelectedVersoes, setAppliedSelectedVersoes] = useState([]);
+    const [appliedRetro, setAppliedRetro] = useState(false); // valor aplicado
 
     // filtro silencioso vindo da URL (ex: ?clube=Fortaleza)
     const [silentClub, setSilentClub] = useState(''); // string do clube quando ativado
 
     const [showFilter, setShowFilter] = useState(false)
     const [productsCount, setProductsCount] = useState(0);
-    
+
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);//Cria um objeto para ler os parâmetros da URL.
         const ano = location.state?.anoLancamento || queryParams.get('ano');//pega o anoLancamento que foi passado pela location.state,Se não tiver, pega da URL (queryParams.get('ano')).
         const tipo = location.state?.tipo || queryParams.get('tipo');
-        const versao = location.state?.versao ||  queryParams.get('versao');
+        const versao = location.state?.versao || queryParams.get('versao');
+        const retroQuery = queryParams.get('retro');
         //O operador ?. evita erro caso state seja undefined.
         const clubeRaw = queryParams.get('clube'); //pega clube da URL
-    
+
         if (ano && !isNaN(ano)) {//verifica se o ano existe e se ele é um numero isNaN = "is Not a Number" 
             setAnoLancamento(ano);
             setAppliedAnoLancamento(ano);
@@ -51,47 +54,55 @@ export default function ProdutcPage() {
             setAppliedAnoLancamento('');
             //Se não tiver ano válido, deixa o campo vazio.
         }
-        if (versao === 'jogador'){
-                setSelectedVersoes(['jogador'])
-                setAppliedSelectedVersoes(['jogador'])
-        }else if (versao === 'torcedor'){
-                setSelectedVersoes(['torcedor'])
-                setAppliedSelectedVersoes(['torcedor']) 
-        }else{
-                setSelectedVersoes([])
-                setAppliedSelectedVersoes([])
+        if (versao === 'jogador') {
+            setSelectedVersoes(['jogador'])
+            setAppliedSelectedVersoes(['jogador'])
+        } else if (versao === 'torcedor') {
+            setSelectedVersoes(['torcedor'])
+            setAppliedSelectedVersoes(['torcedor'])
+        } else {
+            setSelectedVersoes([])
+            setAppliedSelectedVersoes([])
         }
         if (tipo === 'selecao') {
             setSelectedTypes(['selecao']);
             setAppliedSelectedTypes(['selecao']);
             //Se for “selecao”, aplica esse tipo.
-        }else if (tipo === 'clube'){
+        } else if (tipo === 'clube') {
             setSelectedTypes(['clube']);
             setAppliedSelectedTypes(['clube']);
-        }else if (tipo=== 'retro'){
-            setSelectedTypes(['retro']);
-            setAppliedSelectedTypes(['retro']);
+            /*}else if (tipo=== 'retro'){
+                setSelectedTypes(['retro']);
+                setAppliedSelectedTypes(['retro']);*/
         } else {
             setSelectedTypes([]);
             setAppliedSelectedTypes([]);
         }
 
+        if (retroQuery === "sim") {
+            setIsRetro(true);
+            setAppliedRetro(true);
+        } else {
+            setIsRetro(false);
+            setAppliedRetro(false);
+        }
+
         // 🔹 Se vier "ceara" ou "fortaleza" na URL, aplica silenciosamente
         if (clubeRaw) {
-                const trimmed = String(clubeRaw).trim();
-                const lower = trimmed.toLowerCase();
-                // aceita diferentes grafias / acentos
-                if (lower === 'fortaleza' || lower === 'ceara' || lower === 'ceará') {
-                    // guarda a string "amigável" (preservando capitalização mínima)
-                    const normalized = trimmed.split(' ')
-                        .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-                        .join(' ');
-                    setSilentClub(normalized); // ex: "Fortaleza" ou "Ceará"
-                    // garantir que 'clube' esteja como tipo aplicado para compatibilidade
-                    setAppliedSelectedTypes(prev => (prev.includes('clube') ? prev : [...prev, 'clube']));
-                } else {
-                    setSilentClub('');
-                }
+            const trimmed = String(clubeRaw).trim();
+            const lower = trimmed.toLowerCase();
+            // aceita diferentes grafias / acentos
+            if (lower === 'fortaleza' || lower === 'ceara' || lower === 'ceará') {
+                // guarda a string "amigável" (preservando capitalização mínima)
+                const normalized = trimmed.split(' ')
+                    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+                    .join(' ');
+                setSilentClub(normalized); // ex: "Fortaleza" ou "Ceará"
+                // garantir que 'clube' esteja como tipo aplicado para compatibilidade
+                setAppliedSelectedTypes(prev => (prev.includes('clube') ? prev : [...prev, 'clube']));
+            } else {
+                setSilentClub('');
+            }
         } else {
             setSilentClub('');
         }
@@ -105,9 +116,9 @@ export default function ProdutcPage() {
         /*Coloca os valores padrão nos filtros de preço e ordenação.
         O slider de preço começa em 0 até 200.
         setValue e setAppliedValue controlam a ordem (crescente ou decrescente) de preços, que aqui está zerada. */
-    }, [location.search,location.state ]); //Isso diz: "Execute tudo isso sempre que a URL (location.search) ou o estado (location.state) mudar."
+    }, [location.search, location.state]); //Isso diz: "Execute tudo isso sempre que a URL (location.search) ou o estado (location.state) mudar."
 
-    
+
 
     const handleTypeChange = (type) => {//Quando o usuário clicar em um checkbox de tipo (clube, selecao, retro):Se já estava marcado, remove, e vice versa.
         setSelectedTypes(prev =>
@@ -118,16 +129,16 @@ export default function ProdutcPage() {
     };
 
     const handleVersaoChange = (versao) => {
-    setSelectedVersoes(prev =>
-        prev.includes(versao)
-            ? prev.filter(v => v !== versao)
-            : [...prev, versao]
-    );
-};
+        setSelectedVersoes(prev =>
+            prev.includes(versao)
+                ? prev.filter(v => v !== versao)
+                : [...prev, versao]
+        );
+    };
 
     // Formatar valor em reais
-   /* const formatCurrency = (value) =>
-        value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });*///Transforma um número normal em formato de dinheiro (ex: 1000 vira R$ 1.000,00).
+    /* const formatCurrency = (value) =>
+         value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });*///Transforma um número normal em formato de dinheiro (ex: 1000 vira R$ 1.000,00).
 
     useEffect(() => {
         setAppliedValue(value); // Aplica instantaneamente a ordenação quando value muda
@@ -136,9 +147,9 @@ export default function ProdutcPage() {
     const handleApplyFilters = () => {
         setAppliedMinPrice(minPrice);
         setAppliedMaxPrice(maxPrice);
-        
         setAppliedSelectedTypes(selectedTypes);
         setAppliedSelectedVersoes(selectedVersoes);
+        setAppliedRetro(isRetro);
 
         // Validar ano antes de aplicar
         if (anoLancamento === '' || (anoLancamento >= 1900 && anoLancamento <= 2030)) {
@@ -154,23 +165,23 @@ export default function ProdutcPage() {
         setShowFilter(false)
     };
 
-    const handleFilter =()=>{
+    const handleFilter = () => {
         setShowFilter(!showFilter)
     }
 
     return (
         <main className={styles.ProdutcPage}>
-            
-                <section className={`${styles.filterControl} ${showFilter ? styles.active : ''}`}>
-                    <IoClose onClick={handleFilter} className={styles.closeFilterBtn}/>
+
+            <section className={`${styles.filterControl} ${showFilter ? styles.active : ''}`}>
+                <IoClose onClick={handleFilter} className={styles.closeFilterBtn} />
                 <div className={styles.inputsFilter}>
                     <Typography gutterBottom>Tipo:</Typography>
                     <FormGroup>
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={selectedTypes.includes('retro')}
-                                    onChange={() => handleTypeChange('retro')}
+                                    checked={isRetro}
+                                    onChange={(e) => setIsRetro(e.target.checked)}
                                     sx={{
                                         color: '#666', // cor do checkbox quando desmarcado
                                         '&.Mui-checked': {
@@ -187,7 +198,7 @@ export default function ProdutcPage() {
                                     checked={selectedTypes.includes('selecao')}
                                     onChange={() => {
                                         handleTypeChange('selecao');
-                                        
+
                                     }}
                                     sx={{
                                         color: '#666', // cor do checkbox quando desmarcado
@@ -225,30 +236,30 @@ export default function ProdutcPage() {
                             control={
                                 <Checkbox
                                     checked={selectedVersoes.includes('torcedor')}
-                                    onChange={()=> handleVersaoChange('torcedor')}
+                                    onChange={() => handleVersaoChange('torcedor')}
                                     sx={{
                                         color: '#666',
                                         '&.Mui-checked': {
                                             color: 'var(--laranja)', // cor quando marcado 
                                         },
                                     }}
-                                    
+
                                 />
                             }
                             label="Torcedor"
                         />
-                         <FormControlLabel
+                        <FormControlLabel
                             control={
                                 <Checkbox
                                     checked={selectedVersoes.includes('jogador')}
-                                    onChange={()=> handleVersaoChange('jogador')}
+                                    onChange={() => handleVersaoChange('jogador')}
                                     sx={{
                                         color: '#666',
                                         '&.Mui-checked': {
                                             color: 'var(--laranja)', // cor quando marcado 
                                         },
                                     }}
-                                    
+
                                 />
                             }
                             label="Jogador"
@@ -256,7 +267,7 @@ export default function ProdutcPage() {
                     </FormGroup>
                 </div>
                 <p className={styles.horizontalLine}></p>
-                <div>
+                {/*<div>
                     <Typography gutterBottom>Ano de Lançamento:</Typography>
                     <input
                         type="number"
@@ -268,11 +279,11 @@ export default function ProdutcPage() {
                         placeholder="Ex: 2024"
                         className={styles.anoInput}
                     />
-                </div>
+                </div>*/}
                 <button onClick={handleApplyFilters}
                     variant="contained" className={styles.filterButton}>Aplicar Filtrar</button>
-            </section>   
-            
+            </section>
+
             <div className={styles.titlePage}>
                 <h1>Todos os Produtos</h1>
                 <p>Resultado: {productsCount} produtos encontrados</p>
@@ -282,19 +293,19 @@ export default function ProdutcPage() {
                     sx={{
                         width: '100%',
                         maxWidth: '400px',
-                        boxShadow:'0 2px 6px rgba(0,0,0,0.2)',
-                        color:'white',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+                        color: 'white',
                         height: '33px', // ajusta a altura aqui
                         display: 'flex',
-                        borderRadius:"5px",
+                        borderRadius: "5px",
                         justifyContent: 'center', // centraliza o conteúdo verticalmente
 
                         '& .MuiOutlinedInput-root': {
                             height: '40px',
-                            borderRadius:"5px",
+                            borderRadius: "5px",
                             '& fieldset': {
                                 borderColor: '#C7C7C7FF',
-                                
+
                             },
                             '&:hover fieldset': {
                                 borderColor: '#C7C7C7FF',
@@ -319,13 +330,13 @@ export default function ProdutcPage() {
                         value={value}
                         label="Ordenar por:"
                         onChange={(e) => setValue(e.target.value)}
-                
+
                         sx={{
                             backgroundColor: '#F0F0F0',
                             color: 'black',
                             padding: '0px', // padding reduzido aqui
                             height: '40px', // ou ajuste manualmente a altura
-                            
+
                             '& .MuiSvgIcon-root': {
                                 color: 'black', // seta preta
                             },
@@ -335,41 +346,42 @@ export default function ProdutcPage() {
                                 alignItems: 'center',
                             },
                         }}
-                
+
                         MenuProps={{
                             PaperProps: {
-                            sx: {
-                                backgroundColor: '#B8B8B8FF', // fundo do dropdown
-                                color: 'white',          // cor do texto
-                
-                
-                                '& .MuiMenuItem-root': {
-                                color: 'white',
-                                '&.Mui-selected': {
-                                    backgroundColor: '#E7E7E7FF',
-                                },
-                                '&:hover': {
-                                    backgroundColor: '#464646FF',
-                                },
-                                },
-                            }}
+                                sx: {
+                                    backgroundColor: '#B8B8B8FF', // fundo do dropdown
+                                    color: 'white',          // cor do texto
+
+
+                                    '& .MuiMenuItem-root': {
+                                        color: 'white',
+                                        '&.Mui-selected': {
+                                            backgroundColor: '#E7E7E7FF',
+                                        },
+                                        '&:hover': {
+                                            backgroundColor: '#464646FF',
+                                        },
+                                    },
+                                }
+                            }
                         }}
-                        >
+                    >
                         <MenuItem value="" sx={{
                             backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#929292FF !important", // hover
+                                backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#979797FF !important", // quando selecionado
-                            color: "white",
+                                backgroundColor: "#979797FF !important", // quando selecionado
+                                color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
+                                backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#464646FF", // quando clicado
+                                backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>
                             <em>None</em>
@@ -378,74 +390,74 @@ export default function ProdutcPage() {
                             backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#929292FF !important", // hover
+                                backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#929292FF !important", // quando selecionado
-                            color: "white",
+                                backgroundColor: "#929292FF !important", // quando selecionado
+                                color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
+                                backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#464646FF", // quando clicado
+                                backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>Preço: Menor → Maior</MenuItem>
-                        <MenuItem value={'descrescente'}sx={{
+                        <MenuItem value={'descrescente'} sx={{
                             backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#929292FF !important", // hover
+                                backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#929292FF !important", // quando selecionado
-                            color: "white",
+                                backgroundColor: "#929292FF !important", // quando selecionado
+                                color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
+                                backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#464646FF", // quando clicado
+                                backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>Preço: Maior → Menor</MenuItem>
-                        <MenuItem value={"recentes"}sx={{
+                        <MenuItem value={"recentes"} sx={{
                             backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#929292FF !important", // hover
+                                backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#929292FF !important", // quando selecionado
-                            color: "white",
+                                backgroundColor: "#929292FF !important", // quando selecionado
+                                color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
+                                backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#464646FF", // quando clicado
+                                backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>Mais Recentes</MenuItem>
-                        <MenuItem value={"antigos"}sx={{
+                        <MenuItem value={"antigos"} sx={{
                             backgroundColor: "#B8B8B8FF",
                             color: "white",
                             "&:hover": {
-                            backgroundColor: "#929292FF !important", // hover
+                                backgroundColor: "#929292FF !important", // hover
                             },
                             "&.Mui-selected": {
-                            backgroundColor: "#929292FF !important", // quando selecionado
-                            color: "white",
+                                backgroundColor: "#929292FF !important", // quando selecionado
+                                color: "white",
                             },
                             "&.Mui-focusVisible": {
-                            backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
+                                backgroundColor: "#929292FF", // quando focado (ex: pelo teclado)
                             },
                             "&.Mui-active": {
-                            backgroundColor: "#464646FF", // quando clicado
+                                backgroundColor: "#464646FF", // quando clicado
                             },
                         }}>Mais Antigos</MenuItem>
                     </Select>
                 </FormControl>
                 {!showFilter && (
-                    <button onClick={handleFilter}  className={styles.openFilterBtn}><CiFilter /></button>
+                    <button onClick={handleFilter} className={styles.openFilterBtn}><CiFilter /></button>
                 )}
             </div>
             <Products
@@ -455,6 +467,7 @@ export default function ProdutcPage() {
                 selectedTypes={appliedSelectedTypes}
                 sortOrder={appliedValue}
                 anoLancamento={appliedAnoLancamento}
+                retro={appliedRetro ? "sim" : null}
                 selectedVersoes={appliedSelectedVersoes}
                 forcedClub={silentClub}//  quando presente, Products mostrará só esse clube
                 onProductsCountChange={setProductsCount} // Passa a função para atualizar a contagem
