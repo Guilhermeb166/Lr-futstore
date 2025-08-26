@@ -177,7 +177,7 @@ export default function IndividualProduct() {
                                         setEditTamanhos([...editTamanhos, novo]);
                                     }
                                 }}>
-                                    + Adicionar tamanho
+                                    +
                                 </button>
                             </div>
                         </label>
