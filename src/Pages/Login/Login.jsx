@@ -15,13 +15,12 @@ import {
     getDocs,
     collection
 } from "firebase/firestore";
+ import { useAuth } from '../../Context/AuthContext';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-const PREDEFINED_USER = {
-    email: process.env.REACT_APP_ADMIN_EMAIL,
-    password: process.env.REACT_APP_ADMIN_PASSWORD
-  };
+
+
 export default function Login(){
     const [email,setEmail] = useState("")
     const [ password,setPassword] = useState("")
@@ -29,34 +28,28 @@ export default function Login(){
     const [username,setUsername] = useState("")
     const [createAccount,setCreateAccount] = useState(false)
     const [showPassword,setShowPassword] = useState(false)
-    const [currentUser, setCurrentUser] = useState(null);
+//    const [currentUser, setCurrentUser] = useState(null);
+    const { currentUser, loading } = useAuth(); // Pegue os estados do contexto
     const navigate = useNavigate();
 
     // Detecta usuário logado e verifica se passou mais de 1h
+    // Detecta usuário logado e verifica se passou mais de 1h
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        const loginTime = localStorage.getItem("loginTime");
+        if (!loading) { // Aguarda o estado carregar
+            if (currentUser) {
+                const loginTime = localStorage.getItem("loginTime");
+                const now = Date.now();
+                const diff = now - parseInt(loginTime, 10);
+                const oneHour = 60 * 60 * 1000;
 
-        // Se tem usuário e loginTime
-        if (user && loginTime) {
-            const now = Date.now();
-            const diff = now - parseInt(loginTime, 10);
-            const oneHour = 60 * 60 * 1000;
-
-            if (diff > oneHour) {
-            await signOut(auth);
-            localStorage.removeItem("loginTime");
-            setCurrentUser(null);
-            } else {
-            setCurrentUser(user);
+                if (diff > oneHour) {
+                    signOut(auth);
+                    localStorage.removeItem("loginTime");
+                    // setCurrentUser(null); // O AuthContext já vai cuidar disso
+                } 
             }
-        } else {
-            setCurrentUser(null);
         }
-        });
-
-        return () => unsubscribe();
-    }, []);   
+    }, [currentUser, loading]);
 
     const checkUsernameExists = async (username) => {
         const q = query(collection(db, "usuarios"), where("username", "==", username))
@@ -66,18 +59,19 @@ export default function Login(){
 
     const handleLogin = async (e)=>{
         e.preventDefault()
-        try{
-            const userCredential = await signInWithEmailAndPassword(auth,email,password)
+          try {
+            await signInWithEmailAndPassword(auth, email, password)
+            localStorage.setItem("loginTime", Date.now());
 
-            localStorage.setItem("loginTime", Date.now()); //  salva o horário do login
-
-            //verifica se é o admin
-            if(userCredential.user.email === PREDEFINED_USER.email){
-                navigate("/admin"); // Redireciona para Admin
-            }else{
-                navigate("/home"); // Redireciona para Home
+            // A navegação agora é feita aqui, após o login ser concluído
+            const user = auth.currentUser;
+            if (user && user.email === process.env.REACT_APP_ADMIN_EMAIL) {
+                navigate("/admin");
+            } else {
+                navigate("/"); // Redireciona para a página inicial, não para /home
             }
-        }catch (error){
+
+        } catch (error) {
             alert("Erro ao fazer login: " + error.message)
         }
     }
@@ -119,8 +113,7 @@ export default function Login(){
     const handleLogout = async () => {
         await signOut(auth);
         localStorage.removeItem("loginTime");
-        setCurrentUser(null);
-      };
+    };
 
     const handleCreateAccount=()=>{
         setCreateAccount(!createAccount)

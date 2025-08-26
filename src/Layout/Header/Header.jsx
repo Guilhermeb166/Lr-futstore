@@ -8,17 +8,17 @@ import { useNavigate } from 'react-router-dom';
 import SideCard from '../../Pages/Cart/sideCart';
 import { useCart } from '../../Context/AppContext';
 import logo from '../../img/lrLogo.png'
-import { db,auth } from '../../backend/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-import { collection,getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../backend/firebase';
+import { collection,getDocs } from 'firebase/firestore';
+import { useAuth } from '../../Context/AuthContext';
+
 export default function Header(){
     const [searchQuery,setSearchQuery] = useState('')
     const [suggestions, setSuggestions] = useState([])
-    const [username,setUsername] = useState(null)
     const [menuOpen,setMenuOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
     const [cartOpen,setCartOpen] = useState(false)
-    const [isAdmin, setIsAdmin] = useState(false)
+    const { username, isAdmin } = useAuth(); // Pegue os estados do contexto
     const navigate = useNavigate();
     
     const { cartItems } = useCart();
@@ -59,34 +59,7 @@ export default function Header(){
         return () => window.removeEventListener('resize',handleResize)
     },[])
 
-    useEffect(()=>{
-        const unsubscribe = onAuthStateChanged(auth, async (user)=>{
-            if (user) {
-                const snapshot = await getDocs (
-                    query(collection(db, 'usuarios'), where("email", "==", user.email))
-                )
-
-                if(!snapshot.empty){
-                    const userData = snapshot.docs[0].data()
-                    setUsername(userData.username || null)
-                }
-            } else {
-                setUsername(null)
-            }
-        })
-        return () => unsubscribe();
-    },[])
-
-    useEffect(()=>{
-            const unsubscribe = onAuthStateChanged(auth, (user) =>{
-                if(user && user.email === process.env.REACT_APP_ADMIN_EMAIL){
-                    setIsAdmin(true)
-                } else {
-                    setIsAdmin(false)
-                }
-            })
-            return () => unsubscribe()
-        }, [])
+    
    
     return(
         <header>
