@@ -279,7 +279,6 @@
     transform: translateX(45px)
 }
 
-
 @media screen and (max-width:767px) {
     /*Carrinho lateral*/
     .sideCart{
