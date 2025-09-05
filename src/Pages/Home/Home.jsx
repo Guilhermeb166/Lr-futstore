@@ -31,10 +31,8 @@ export default function ProdutcPage() {
 
     // filtro silencioso vindo da URL (ex: ?clube=Fortaleza)
     const [silentClub, setSilentClub] = useState(''); // string do clube quando ativado
-
     const [showFilter, setShowFilter] = useState(false)
     const [productsCount, setProductsCount] = useState(0);
-
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);//Cria um objeto para ler os parâmetros da URL.
@@ -117,8 +115,6 @@ export default function ProdutcPage() {
         O slider de preço começa em 0 até 200.
         setValue e setAppliedValue controlam a ordem (crescente ou decrescente) de preços, que aqui está zerada. */
     }, [location.search, location.state]); //Isso diz: "Execute tudo isso sempre que a URL (location.search) ou o estado (location.state) mudar."
-
-
 
     const handleTypeChange = (type) => {//Quando o usuário clicar em um checkbox de tipo (clube, selecao, retro):Se já estava marcado, remove, e vice versa.
         setSelectedTypes(prev =>

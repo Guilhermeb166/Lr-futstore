@@ -63,7 +63,7 @@ export default function Login(){
             await signInWithEmailAndPassword(auth, email, password)
             localStorage.setItem("loginTime", Date.now());
 
-            // A navegação agora é feita aqui, após o login ser concluído
+            // navegação após o login ser concluído
             const user = auth.currentUser;
             if (user && user.email === process.env.REACT_APP_ADMIN_EMAIL) {
                 navigate("/admin");

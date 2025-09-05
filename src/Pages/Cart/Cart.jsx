@@ -29,7 +29,7 @@ export default function Cart() {
             }
         }
 
-        const numberWhatsapp='558597407364'
+        const numberWhatsapp=process.env.REACT_APP_ADMIN_PHONE
         let mensagem = '*Novo pedido via website*%0A%0A'
 
         cartItems.forEach(item=>{

@@ -12,7 +12,7 @@ export default function IndividualProduct() {
     const { addToCart } = useCart()
     const { id } = useParams();
     const [selectedSizes, setSelectedSizes] = useState([]);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState('');
     const [product, setProduct] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false)
     const [isEditing, setIsEditing] = useState(false);
@@ -199,7 +199,7 @@ export default function IndividualProduct() {
                                             type="number"
                                             id={`quantity-${size}`}
                                             min="1"
-                                            value={quantity[size] || 1}
+                                            value={quantity[size] || ''}
                                             onChange={(e) =>
                                                 setQuantity((prev) => ({
                                                     ...prev,
