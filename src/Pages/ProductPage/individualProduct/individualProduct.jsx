@@ -1,7 +1,7 @@
 //individualProduct.jsx
 import { useState, useEffect } from 'react';
 import styles from './individualProduct.module.css'
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc,deleteDoc } from 'firebase/firestore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCart } from '../../../Context/AppContext';
 import { db, auth } from '../../../backend/firebase'
@@ -73,6 +73,22 @@ export default function IndividualProduct() {
         }
     };
 
+    // Função para excluir o produto
+    const handleDeleteProduct = async () => {
+        const confirmDelete = window.confirm("Tem certeza que deseja excluir este produto? Esta ação não pode ser desfeita.");
+        if (confirmDelete) {
+            try {
+                const ref = doc(db, 'camisas', product.id);
+                await deleteDoc(ref);
+                alert("Produto excluído com sucesso!");
+                navigate('/'); // Redireciona após a exclusão
+            } catch (err) {
+                console.error("Erro ao excluir o produto:", err);
+                alert("Erro ao excluir o produto.");
+            }
+        }
+    };
+
     return (
         <main className={styles.individualProduct}>
             <section className={styles.productDetailsLeft}>
@@ -86,7 +102,7 @@ export default function IndividualProduct() {
             <section className={styles.productDetailsRight}>
                 {isAdmin && (
                     <div className={styles.btnControl}>
-                        <button className={styles.deleteProductBtn}>Excluir Produto</button>
+                        <button className={styles.deleteProductBtn} onClick={handleDeleteProduct}>Excluir Produto</button>
                         <button 
                             className={styles.editProductBtn} 
                             onClick={() => setIsEditing((prev) => !prev)}
