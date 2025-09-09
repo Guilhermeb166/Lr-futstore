@@ -1,5 +1,4 @@
-import { FaPhoneFlip } from 'react-icons/fa6'
-import { MdOutlineMail } from "react-icons/md";
+import { FaInstagram } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom';
 import styles from './footer.module.css'
 export default function Footer(){
@@ -16,9 +15,8 @@ export default function Footer(){
                 </ul>
                 <span></span>
                 <ul className={styles.listFooter}>
-                    <strong>Contato</strong>
-                    <li><FaPhoneFlip /> 85-00000-0000</li>
-                    <li><MdOutlineMail/> lrfutstore@gmail.com  </li>
+                    <FaInstagram className={styles.iconInsta}/>
+                    <li>lrfutstore_</li>
                 </ul>
             </div>
             <p className={styles.copy}>&copy;  FUT STORE 2025 - Todos os direitos reservados. Conheça nossa política de privacidade</p>
